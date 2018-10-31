@@ -51,14 +51,22 @@ need to latest version of VSCode to do this. To see if you have the latest VSCod
 means you don't have the latest version. Check the troubleshooting section below if your VSCode
 crashed. Otherwise, update your VSCode, and once you're done, click on `extensions` on the 
 side bar on the left part of your screen. At the top, search the extension marketplace for 
-`IBM Blockchain Platform`. Click on `Install`.
+`IBM Blockchain Platform`. Click on `Install`. Then click on
+`reload`. Nice, you are all set to use the extension! 🙌🏼
 
-## Flow
-1. User downloads IBM Blockchain Starter Plan connection profile 
-and adds url/secret for Certificate Authority in the Node app
-2. User enrolls admin, and registers a user with the Certificate Authority
-3. User installs, instantiates, and invokes carauction chaincode on the peer
-4. Ledger is updated, blocks are added to the Starter Plan service, and the response is sent to Node app.
+## 1. Create a new smart contract project
+![packageFile](/docs/createSmartContract.gif)
+To create a smart contract project, click on you're newly
+downloaded IBM Blockchain Platform extension is located on 
+the left side-bar of VSCode. It should be the extension which
+is all the way at the bottom. Use the keyboard shortcut `Shift` + `CMD` + `P` to 
+bring up all of the commands for the IBM Blockchain Platform. Choose 
+`Create a new smart contract` from the dropdown. Next,
+click `JavaScript` from the dropdown. Next, click `New Folder`, and name the project what you want. I named mine
+`demoContract`. Once the extension is done packaging your
+contract, you can open the `lib` folder to see your smart 
+contract code scaffold. Nice job!
+
 
 <!-- ## Included components
 * [IBM Blockchain Starter Plan](https://console.bluemix.net/catalog/services/blockchain): Use the IBM Blockchain Platform to simplify the developmental, governmental, and operational aspects of creating a blockchain solution.
