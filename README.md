@@ -1,6 +1,7 @@
 # Use IBM Blockchain Platform extension in VSCode to develop a Smart Contract
 
-In tutorial, we will learn the process of using IBP's VSCode extension to streamline the 
+In tutorial, we will learn the process of using IBM Blockchain Platform's VSCode extension 
+to  streamline the 
 process of developing, testing, and deploying a smart contract. The audience for this 
 tutorial is a developer that has some basic understanding of blockchain, and wants to 
 understand how to deploy a network to a Hyperledger fabric instance. Once you finish the 
@@ -40,10 +41,11 @@ You can check your installed versions by running the following commands from a t
 - Use SDK to interact with deployed Smart Contract package
 
 ### Estimated time
-- After the prerequisites are installed, this should take approximately 30-45 minutes to complete.
+- After the prerequisites are installed, this should take <b>approximately 30-45 minutes</b> to complete.
 
 ### Let's get started
-- First thing we need to do is to install the IBM Blockchain Platform VSCode extension. You will
+![packageFile](/docs/installExtension.gif)
+First thing we need to do is to install the IBM Blockchain Platform VSCode extension. You will
 need to latest version of VSCode to do this. To see if you have the latest VSCode extension, go to
 `Code` -> `Check for Updates`. If VSCode crashes at this point (which it did for me), it likely
 means you don't have the latest version. Check the troubleshooting section below if your VSCode
