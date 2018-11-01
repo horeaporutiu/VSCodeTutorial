@@ -70,8 +70,9 @@ Next, we will copy and paste two lines of chaincode, which will update the ledge
 scaffold from the previous step. Go ahead and delete `transaction2` and paste the following 
 lines in:
 
-```let greeting = { text: 'Hi' };
-        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+```
+  let greeting = { text: 'Hi' };
+  await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
 ```
 
 The `my-contract.js` file should look like this now:
