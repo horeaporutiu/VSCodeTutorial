@@ -56,16 +56,54 @@ side bar on the left part of your screen. At the top, search the extension marke
 
 ## 1. Create a new smart contract project
 ![packageFile](/docs/createSmartContract.gif)
-To create a smart contract project, click on you're newly
-downloaded IBM Blockchain Platform extension is located on 
-the left side-bar of VSCode. It should be the extension which
-is all the way at the bottom. Use the keyboard shortcut `Shift` + `CMD` + `P` to 
+To create a smart contract project, click on your newly
+downloaded IBM Blockchain Platform extension. It should be the extension all the way at the bottom of the left side bar. Next, use the keyboard shortcut `Shift` + `CMD` + `P` to 
 bring up all of the commands for the IBM Blockchain Platform. Choose 
-`Create a new smart contract` from the dropdown. Next,
+`Create Smart Contract Project` from the dropdown. Next,
 click `JavaScript` from the dropdown. Next, click `New Folder`, and name the project what you want. I named mine
-`demoContract`. Once the extension is done packaging your
-contract, you can open the `lib` folder to see your smart 
+`demoContract`. Click `Create` and then `Open` your new folder which you just created. Next, you'll be prompted with a dropdown, and you can click `Add to Workspace`. Once the extension is done packaging your
+contract, you can open the `lib/my-contract.js` file to see your smart 
 contract code scaffold. Nice job!
+
+## 2. Write Chaincode
+Next, we will copy and paste two lines of chaincode, which will update the ledger, in our 
+scaffold from the previous step. Go ahead and delete `transaction2` and paste the following 
+lines in:
+
+```let greeting = { text: 'Hi' };
+        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+```
+
+The `my-contract.js` file should look like this now:
+
+```
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+'use strict';
+
+const { Contract } = require('fabric-contract-api');
+
+class MyContract extends Contract {
+
+    async instantiate(ctx) {
+        console.info('instantiate');
+        let greeting = { text: 'Hi' };
+        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+    }
+
+    async transaction1(ctx, arg1) {
+        console.info('transaction1', arg1);
+        let greeting = { text: 'Hi' };
+        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+    }
+
+}
+
+module.exports = MyContract;
+```
+
 
 
 <!-- ## Included components
