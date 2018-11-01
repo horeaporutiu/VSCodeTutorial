@@ -68,7 +68,7 @@ contract code scaffold. Nice job!
 ## 2. Write Chaincode
 Next, we will copy and paste two lines of chaincode, which will update the ledger, in our 
 scaffold from the previous step. Go ahead and delete `transaction2` and paste the following 
-lines in:
+lines after the `console.info` statement in both the `instantiate` and the `transaction1` function:
 
 ```
   let greeting = { text: 'Hi' };
