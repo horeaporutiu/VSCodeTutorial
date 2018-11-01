@@ -104,7 +104,9 @@ class MyContract extends Contract {
 
 module.exports = MyContract;
 ```
+Nice job! Save your file, and move on to packaging this contract!
 
+## 3. Package Smart Contract
 
 
 <!-- ## Included components
