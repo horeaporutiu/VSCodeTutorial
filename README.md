@@ -133,15 +133,11 @@ test your contract. The network consists of a peer, an orderer, a certificate au
 a couchdb instance, all running on seperate docker containers. To start our network, look at 
 your IBM Blockchain Platform extension, at the bottom-right corner where it says `Blockchain Connections`.
 You should see something that says `local_fabric`. Go ahead and click that. That should 
-automatically run a script and you should see thee output as follows: 
+automatically run a script and you should see the output as follows: 
 ```
 Starting fabricvscodelocalfabric_orderer.example.com_1 ... done
-
 Starting fabricvscodelocalfabric_ca.example.com_1      ... done
-
 Starting fabricvscodelocalfabric_couchdb_1             ... done
-Starting fabricvscodelocalfabric_peer0.org1.example.com_1 ... 
-
 Starting fabricvscodelocalfabric_peer0.org1.example.com_1 ... done
 ``` 
 Which shows the docker containers starting up. There is additional output too, such as this:
