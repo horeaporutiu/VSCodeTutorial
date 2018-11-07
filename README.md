@@ -63,10 +63,10 @@ bring up all of the commands for the IBM Blockchain Platform. Choose
 click `JavaScript` from the dropdown. Next, click `New Folder`, and name the project what you want. I named mine
 `demoContract`. Click `Create` and then `Open` your new folder which you just created. Next, you'll be prompted with a dropdown, and you can click `Add to Workspace`. Once the extension is done packaging your
 contract, you can open the `lib/my-contract.js` file to see your smart 
-contract code scaffold. Nice job!
+contract code scaffold. Nice job! 👏🏼
 
 ## 2. Modify Chaincode 
-![packageFile](/docs/addChaincode.gif)
+![packageFile](/docs/addChaincodeCursor.gif)
 Inside your `lib/my-contract.js` file, go ahead and copy 
 and paste this code: 
 
@@ -111,13 +111,19 @@ ledger, which is the most important part of being a
 blockchain developer. Also, in `transaction1` you will see that we 
 are actually returning an object, so we will be able to see if 
 our smart contract is invoked successfully since we can inspect the
-object that is returned from this function. Save the file, and proceed! Good job!
+object that is returned from this function. Save the file, and proceed! Good job! 🔥
 
 ## 3. Package Smart Contract
+![packageFile](/docs/packageSmartContract.gif)
 Now that we have created our smart contract, it's time to package it so we can 
 connect to a Hyperledger Fabric instance. Let's do our favorite keyboard shortcut 
 again, `Shift` + `CMD` + `P` and then look for `package smart contract`, and click 
-on that. 
+on that. The extension will do the rest for you, so sit back, relax, and drink some ☕️.
+In the left sidebar, click on the IBM Blockchain Platform icon. This click will take you
+into another dimension - the blockchain dimension. On the top-left corner, you will 
+have all of your smart contract packages. You should see `demoContract@0.0.1` if 
+everything went well. Nice job! Time to install, and instantiate this contract! 🙌🏼
+
 
 
 <!-- ## Included components
