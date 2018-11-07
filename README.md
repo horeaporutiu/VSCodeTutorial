@@ -65,23 +65,11 @@ click `JavaScript` from the dropdown. Next, click `New Folder`, and name the pro
 contract, you can open the `lib/my-contract.js` file to see your smart 
 contract code scaffold. Nice job!
 
-## 2. Write Chaincode
-Next, we will copy and paste two lines of chaincode, which will update the ledger, in our 
-scaffold from the previous step. Go ahead and delete `transaction2` and paste the following 
-lines after the `console.info` statement in both the `instantiate` and the `transaction1` function:
+## 2. Modify Chaincode 
+Inside your `lib/my-contract.js` file, go ahead and copy 
+and paste this code: 
 
 ```
-  let greeting = { text: 'Hi' };
-  await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
-```
-
-The `my-contract.js` file should look like this now:
-
-```
-/*
- * SPDX-License-Identifier: Apache-2.0
- */
-
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
@@ -89,24 +77,45 @@ const { Contract } = require('fabric-contract-api');
 class MyContract extends Contract {
 
     async instantiate(ctx) {
-        console.info('instantiate');
-        let greeting = { text: 'Hi' };
-        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+      let greeting = { text: 'Hi' };
+      await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
     }
 
     async transaction1(ctx, arg1) {
         console.info('transaction1', arg1);
-        let greeting = { text: 'Hi' };
+        let greeting = { text: arg1 };
         await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+        return greeting;
     }
 
 }
 
 module.exports = MyContract;
 ```
-Nice job! Save your file, and move on to packaging this contract!
+
+It's not much, but it will the 
+`await ctx.stub.putState('GREETING', Buffer.from
+(JSON.stringify(greeting)));` line will update the ledger
+with the key-value pair of 
+```
+{
+  "GREETING": {
+    "text": "hi" 
+  }
+}
+Not much going on here, since this is a hello-world 
+tutorial, but it shows up the basics of updating the 
+ledger, which is the most important part of being a 
+blockchain developer. Also, in `transaction1` you will see that we 
+are actually returning an object, so we will be able to see if 
+our smart contract is invoked successfully since we can inspect the
+object that is returned from this function. Save the file, and proceed! Good job!
 
 ## 3. Package Smart Contract
+Now that we have created our smart contract, it's time to package it so we can 
+connect to a Hyperledger Fabric instance. Let's do our favorite keyboard shortcut 
+again, `Shift` + `CMD` + `P` and then look for `package smart contract`, and click 
+on that. 
 
 
 <!-- ## Included components
