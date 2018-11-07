@@ -140,12 +140,7 @@ Starting fabricvscodelocalfabric_ca.example.com_1      ... done
 Starting fabricvscodelocalfabric_couchdb_1             ... done
 Starting fabricvscodelocalfabric_peer0.org1.example.com_1 ... done
 ``` 
-Which shows the docker containers starting up. There is additional output too, such as this:
-```
-Hyperledger Fabric started in 2 seconds
-2018-11-07 20:04:10.201 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
-Blockchain info: {"height":53,"currentBlockHash":"c2us3Z7thnSlumK3zTXxRZEvBzN6lrQ8iiOb+wwBhzU=","previousBlockHash":"piZs7C8GdmDoApYMa71p4IMdHeVNFk6enuL3Vt0Mp8Y="}
-```
+Which shows the docker containers starting up. There is additional output too.
 Nice. Now, click the `local_fabric` connection again. Now that it's up and running, it should 
 take you to your channel view, which should show one channel, named `mychannel`. Click on 
 `mychannel`, and it will expand the `Peers` and `Instantiated Smart Contracts`. Click on 
