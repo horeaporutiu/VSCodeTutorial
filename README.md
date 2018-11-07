@@ -66,7 +66,7 @@ contract, you can open the `lib/my-contract.js` file to see your smart
 contract code scaffold. Nice job!
 
 ## 2. Modify Chaincode 
-![packageFile](/docs/addChaindoe.gif)
+![packageFile](/docs/addChaincode.gif)
 Inside your `lib/my-contract.js` file, go ahead and copy 
 and paste this code: 
 
