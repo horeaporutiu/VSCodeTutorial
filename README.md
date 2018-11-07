@@ -125,6 +125,7 @@ have all of your smart contract packages. You should see `demoContract@0.0.1` if
 everything went well. Nice job! Time to install, and instantiate this contract! 🙌🏼
 
 ## 4. Install Smart Contract
+![packageFile](/docs/installSmartContract.gif)
 Ok, we're more than halfway there. Now for the fun part! Let's install this contract on the peer!
 To do this, we must first connect to a Hyperledger Fabric network. The network that comes with
 the VSCode extension is perfect for development - it offers the minimal set up to develop, and 
