@@ -148,6 +148,17 @@ take you to your channel view, which should show one channel, named `mychannel`.
 `Install Smart Contract`. Next, the extension will ask you which package, and just choose
 `demoContract@0.0.1`. That's it! Nice job!
 
+## 4. Instantiate Smart Contract
+![packageFile](/docs/instantiateSmartContract.gif)
+This is the real test - will our smart contract instantiate properly? Let's see.
+From the IBM Blockchain extension, in the bottom-left corner, under `Blockchain Connections`,
+right-click on `mychannel` and then on `Instantiate / Upgrade Smart Contract`. The extension
+will then ask you which contract and version to instantiate, and we will pick `demoContract@0.0.1`. 
+The extension will then ask you which function to call. You can go ahead and type in `instantiate`.
+Next, it will ask you the arguments, for which there are none, so just hit enter. The extension will
+do some work, and then you should see in the bottom-right corner that the contract was successfully
+instantiated. Hooray!! 🤟🏼
+
 
 <!-- ## Included components
 
