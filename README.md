@@ -124,9 +124,41 @@ into another dimension - the blockchain dimension. On the top-left corner, you w
 have all of your smart contract packages. You should see `demoContract@0.0.1` if 
 everything went well. Nice job! Time to install, and instantiate this contract! 🙌🏼
 
+## 4. Install Smart Contract
+Ok, we're more than halfway there. Now for the fun part! Let's install this contract on the peer!
+To do this, we must first connect to a Hyperledger Fabric network. The network that comes with
+the VSCode extension is perfect for development - it offers the minimal set up to develop, and 
+test your contract. The network consists of a peer, an orderer, a certificate authority, and 
+a couchdb instance, all running on seperate docker containers. To start our network, look at 
+your IBM Blockchain Platform extension, at the bottom-right corner where it says `Blockchain Connections`.
+You should see something that says `local_fabric`. Go ahead and click that. That should 
+automatically run a script and you should see thee output as follows: 
+```
+Starting fabricvscodelocalfabric_orderer.example.com_1 ... done
+
+Starting fabricvscodelocalfabric_ca.example.com_1      ... done
+
+Starting fabricvscodelocalfabric_couchdb_1             ... done
+Starting fabricvscodelocalfabric_peer0.org1.example.com_1 ... 
+
+Starting fabricvscodelocalfabric_peer0.org1.example.com_1 ... done
+``` 
+Which shows the docker containers starting up. There is additional output too, such as this:
+```
+Hyperledger Fabric started in 2 seconds
+2018-11-07 20:04:10.201 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+Blockchain info: {"height":53,"currentBlockHash":"c2us3Z7thnSlumK3zTXxRZEvBzN6lrQ8iiOb+wwBhzU=","previousBlockHash":"piZs7C8GdmDoApYMa71p4IMdHeVNFk6enuL3Vt0Mp8Y="}
+```
+Nice. Now, click the `local_fabric` connection again. Now that it's up and running, it should 
+take you to your channel view, which should show one channel, named `mychannel`. Click on 
+`mychannel`, and it will expand the `Peers` and `Instantiated Smart Contracts`. Click on 
+`peers` and you should see `peer0.org1.example.com`. Right-click on that peer, and click on
+`Install Smart Contract`. Next, the extension will ask you which package, and just choose
+`demoContract@0.0.1`. That's it! Nice job!
 
 
 <!-- ## Included components
+
 * [IBM Blockchain Starter Plan](https://console.bluemix.net/catalog/services/blockchain): Use the IBM Blockchain Platform to simplify the developmental, governmental, and operational aspects of creating a blockchain solution.
 
 ## Featured technologies
@@ -675,3 +707,7 @@ Open `enrolladmin.js` and the newly downloaded `creds.json` in an editor of your
 
 # License
 [Apache 2.0](LICENSE) -->
+<!-- 
+
+at this point, you can go into your terminal and run `$ docker ps` to see the containers. You should
+have 4 at this point, namely, the peer, orderer, CA, and couchdb. Nice job :) -->
