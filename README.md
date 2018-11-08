@@ -309,11 +309,10 @@ Now, run the script:
 and saved certs and keys in there. Nice, we are sooo close!
 
 ## 7. Update network ports
-
+![packageFile](/docs/networkPorts.gif)
 Next, let's create our network file which will specify which ports our 
 docker containers are running on. Create a new file called `network.yaml` in 
 the `fabricNetwork` directory. Copy and paste the following in the file: 
-
 
 ```
 ---
