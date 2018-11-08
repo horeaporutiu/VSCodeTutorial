@@ -293,88 +293,55 @@ certificateAuthorities:
 ```
 Nice. Save the file.
 
-## 8. Invoke Smart Contract
+## 9. Invoke Smart Contract
 Ok, so we've instantiated our contract, created our identity, so now what?
 Well now, let's actually invoke it! To do this, we will need a script.
-So in your `demoContract`
-directory, create a new file called, uhh... `invoke.js`. Let's go with that.
-Inside that file, paste the following code: 
+That's where our `invoke.js` comes in. Let's take a look at the file.
+After importing the `fabric-network` module, use the identity stored
+in the `_idwallet` to connect to our fabric network. This happens on 
+this line `await gateway.connect(connectionProfile, connectionOptions);`.
+Notice here that our connection profile is the `network.yaml` file that 
+we updated in the previous step, and the `connectionOptions` is an object
+which contains the credentials from our `./_idwallet` directory. After we 
+connect to the network, we need to specify the channel to connect to, which 
+in our case happens to be `mychannel`. This line connects to our channel: 
+`const network = await gateway.getNetwork('mychannel');`. Our channel may 
+have many contracts installed, so in the next line, we specify which contract
+to invoke. Which in our case, is `demoContract`. 
+`const contract = await network.getContract('demoContract');` The final part 
+of our script picks which function to invoke, and specifies the arguments. In 
+our case we are invoking `transaction1` with an arg of `hello` as can be seen
+here: `let response = await contract.submitTransaction('transaction1', 'hello');`.
+Now, we can run the script, by using this command:
+```
+$ node invoke.js
+```
+If all goes well, you should see the following output:
 
 ```
-'use strict';
+VSCodeLocalNetwork$ node invoke.js
+Connected to Fabric gateway.
+Connected to mychannel.
 
-const yaml = require('js-yaml');
-const { FileSystemWallet, Gateway } = require('fabric-network');
-const fs = require('fs');
-
-// A wallet stores a collection of identities for use
-const wallet = new FileSystemWallet('./_idwallet');
-
-async function main() {
-
-  // A gateway defines the peers used to access Fabric networks
-  const gateway = new Gateway();
-
-  // Main try/catch block
-  try {
-    const identityLabel = 'User1@org1.example.com';
-    let connectionProfile = yaml.safeLoad(fs.readFileSync('.network.yaml', 'utf8'));
-
-    let connectionOptions = {
-      identity: identityLabel,
-      wallet: wallet
-    };
-
-    // Connect to gateway using application specified parameters
-    await gateway.connect(connectionProfile, connectionOptions);
-
-    console.log('Connected to Fabric gateway.');
-
-    // Get addressability to PaperNet network
-    const network = await gateway.getNetwork('mychannel');
-
-    console.log('Connected to mychannel. ');
-
-    // Get addressability to commercial paper contract
-    const contract = await network.getContract('demoContract');
-
-    console.log('\nSubmit commercial paper issue transaction.');
-
-    // issue commercial paper
-    let response = await contract.submitTransaction('transaction1', 'hello');
-    console.log('Response from invoking smart contract: ')
-    console.log(response);
-    return response;
-
-  } catch (error) {
-    console.log(`Error processing transaction. ${error}`);
-    console.log(error.stack);
-  } finally {
-    // Disconnect from the gateway
-    console.log('Disconnect from Fabric gateway.');
-    gateway.disconnect();
-  }
-}
-
-// invoke the main function, can catch any error that might escape
-main().then(() => {
-  console.log('done');
-}).catch((e) => {
-  console.log('Final error checking.......');
-  console.log(e);
-  console.log(e.stack);
-  process.exit(-1);
-});
+Submit commercial paper issue transaction.
+info: [TransactionEventHandler]: _strategySuccess: strategy success for transaction "b1ec70fd8cd69b9b41f9680a84b1fed1d102d829299853da303ec40a3f6ac8a9"
+Response from invoking smart contract:
+<Buffer 75 6e 64 65 66 69 6e 65 64>
+Disconnect from Fabric gateway.
+done
 ```
-
-Hope you learned something, and if you find anything missing, encounter a nasty bug, error, etc. please open an issue on this repo above⤴⤴⤴⤴⤴! 🕷🕷🕷
-
+Woo!! That's it! You made it! 💪🏼💪🏼
 
 
-
-
-
-
+## 10. Conclusion
+Nice job! You are done! You learned how to create, package, install, instantiate, 
+and invoke a smart contract using Hyperledger's newest API's. At this point, 
+you can focus on developing your smart contract, and update your `my-contract.js`
+file knowing that you have taken care of the networking aspects of blockchain, 
+and that you can successfully invoke, and update your ledger using just VSCode,
+Node.js, and VSCode. Please, please, please reach out to me if there are bugs,
+comment on this post, and tell me, and I will fix them. Thanks so much for 
+reading this post, and hope you enjoyed it! Horea Blockchain out!
 
 
 
