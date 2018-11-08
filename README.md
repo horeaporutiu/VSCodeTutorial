@@ -193,7 +193,7 @@ ZKPD7ikt+vOYgVnqlA==
 
 ```
 
-Similarly, create another file called `key`, and paste in the following private key:
+Save the file! Similarly, create another file called `key`, and paste in the following private key:
 ```
 -----BEGIN PRIVATE KEY-----
 MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgJ8IrEgxfZzjGsyt+
@@ -202,6 +202,7 @@ MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgJ8IrEgxfZzjGsyt+
 -----END PRIVATE KEY-----
 
 ```
+And save the file! 
 Next, create a file called `addIdentity.js` and paste in the following
 code: 
 
@@ -242,25 +243,76 @@ main().then(()=>{
     process.exit(-1);
 });
 ```
-Great. We're doing amazing so far. Only a few more things and you'll 
+Save the file. Great. We're doing amazing so far. Only a few more things and you'll 
 be ready to invoke that smart contract! In terms of the code above, 
 we are importing the new `fabric-network` module from NPM, and then 
 using that to create an identity by passing in our cert and private 
 key that we created in the previous steps. The new identity will be stored
 in a folder called `_idwallet`.
 
-```
+## 6. Create Identity
+![packageFile](/docs/createCertsAndScript.gif)
+Now that we have our certs set up, we are ready to create our digital
+identity. Let's create a new file called `addIdentity.js` and paste in the
+following code:
 
 ```
+'use strict';
 
-## 5. Invoke Smart Contract
+// Bring key classes into scope, most importantly Fabric SDK network class
+const fs = require('fs');
+const { FileSystemWallet, X509WalletMixin } = require('fabric-network');
+
+// A wallet stores a collection of identities for use
+const wallet = new FileSystemWallet('./_idwallet');
+
+async function main(){
+
+    // Main try/catch block
+    try {
+
+        // define the identity to use
+        const cert = fs.readFileSync('./cert').toString();
+        const key = fs.readFileSync('./key').toString();
+        const identityLabel = 'User1@org1.example.com';
+
+        // prep wallet and test it at the same time
+        await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));
+
+    } catch (error) {
+        console.log(`Error adding to wallet. ${error}`);
+        console.log(error.stack);
+    }
+}
+
+main().then(()=>{
+    console.log('done');
+}).catch((e)=>{
+    console.log(e);
+    console.log(e.stack);
+    process.exit(-1);
+});
+```
+and then save that file. Next, run `npm init`, and just hit enter so you
+get all the defaults. Next, we need to install the dependency that our script
+uses, and we will use npm for that. Run the following to save the dependency in 
+your `package.json`:
+
+`npm install fabric-network --save`
+
+Now, run the script:
+
+`node addIdentity.js`. This should have created a folder called `_idwallet`
+and saved certs and keys in there. Nice, we are sooo close!
+
+<!-- ## 5. Invoke Smart Contract
 Ok, so we've instantiated our contract, now what? Well now, let's actually
 invoke it! To do this, we will need a script. So in your `demoContract`
 directory, create a new file called, uhh... `invoke.js`. Let's go with that.
 Inside that file, paste the following code: 
 
 ```
-```
+``` -->
 
 <!-- ## Included components
 
