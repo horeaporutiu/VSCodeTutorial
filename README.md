@@ -160,7 +160,7 @@ do some work, and then you should see in the bottom-right corner that the contra
 instantiated. Hooray!! 🤟🏼
 
 ## 6. Import certificate and key
-<!-- ![packageFile](/docs/createCertsAndScript.gif) -->
+![packageFile](/docs/gitPull.gif)
 At this point, we need to start interacting a bit more closely with our
 Fabric instance. We'll need to import some certs to prove to the certificate
 authority that we are allowed to create a digital identity on the network, and 
@@ -169,7 +169,14 @@ I have made a GitHub repo with all the certs, keys, and scripts we
 will work with, so go ahead and git clone this repo in your current
 workspace. So go ahead and go outside `demoContract` to clone this 
 directory - we want to keep our smart contract directory as 
-lightweight as possible. Then go ahead and clone my repository, and 
+lightweight as possible. To do this, just issue the following command:
+
+```
+demoContract $ cd ..
+```
+This will take you outside your `demoContract` directory.
+
+Then go ahead and clone my repository, and 
 then do a `ls` command inside the network to see what files we have.
 ```
 $ git clone https://github.com/horeaporutiu/VSCodeLocalNetwork.git
