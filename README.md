@@ -66,7 +66,7 @@ side bar on the left part of your screen. At the top, search the extension marke
 `IBM Blockchain Platform`. Click on `Install`. Then click on
 `reload`. Nice, you are all set to use the extension! 🙌🏼
 
-## Step 1. Clone the repo
+## Step 1. Create a New Smart Contract Project
 ![packageFile](/docs/createSmartContract.gif)
 To create a smart contract project, click on your newly
 downloaded IBM Blockchain Platform extension. It should be the extension all the way at the bottom of the left side bar. Next, use the keyboard shortcut `Shift` + `CMD` + `P` to 
