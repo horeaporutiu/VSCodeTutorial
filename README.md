@@ -310,22 +310,39 @@ Nice. Save the file.
 ![packageFile](/docs/invoke.gif)
 Ok, so we've instantiated our contract, created our identity, so now what?
 Well now, let's actually invoke it! To do this, we will need a script.
-That's where our `invoke.js` comes in. Let's take a look at the file.
-After importing the `fabric-network` module, use the identity stored
+That's where our `invoke.js` comes in. Let's take a look at this file.
+After importing the `fabric-network` module, we use the identity stored
 in the `_idwallet` to connect to our fabric network. This happens on 
-this line `await gateway.connect(connectionProfile, connectionOptions);`.
+this line 
+```
+await gateway.connect(connectionProfile, connectionOptions);
+```
+
 Notice here that our connection profile is the `network.yaml` file that 
 we updated in the previous step, and the `connectionOptions` is an object
 which contains the credentials from our `./_idwallet` directory. After we 
 connect to the network, we need to specify the channel to connect to, which 
-in our case happens to be `mychannel`. This line connects to our channel: 
-`const network = await gateway.getNetwork('mychannel');`. Our channel may 
+in our case happens to be `mychannel`. This line connects to our channel:
+
+```
+const network = await gateway.getNetwork('mychannel');
+```
+Our channel may 
 have many contracts installed, so in the next line, we specify which contract
 to invoke. Which in our case, is `demoContract`. 
-`const contract = await network.getContract('demoContract');` The final part 
+
+```
+const contract = await network.getContract('demoContract');
+```
+ The final part 
 of our script picks which function to invoke, and specifies the arguments. In 
 our case we are invoking `transaction1` with an arg of `hello` as can be seen
-here: `let response = await contract.submitTransaction('transaction1', 'hello');`.
+here: 
+
+```
+let response = await contract.submitTransaction('transaction1', 'hello');
+```
+
 Now, we can run the script, by using this command:
 ```
 $ node invoke.js
