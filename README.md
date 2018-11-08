@@ -370,7 +370,7 @@ and invoke a smart contract using Hyperledger's newest API's. At this point,
 you can focus on developing your smart contract, and update your `my-contract.js`
 file knowing that you have taken care of the networking aspects of blockchain, 
 and that you can successfully invoke, and update your ledger using just VSCode,
-Node.js, and VSCode. Please, please, please reach out to me if there are bugs,
+Node.js, and Docker. Please, please, please reach out to me if there are bugs,
 comment on this post, and tell me, and I will fix them. Thanks so much for 
 reading this post, and hope you enjoyed it! Horea Blockchain out!
 
