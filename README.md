@@ -232,7 +232,11 @@ In terms of the code above,
 we are importing the new `fabric-network` module from NPM, and then 
 using that to create an identity by passing in our cert and private 
 key that we got from the GitHub repo. The new identity will be stored
-in a folder called `_idwallet`.
+in a folder called `_idwallet`. The most important line of this file
+is the `await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));` line which actually creates a new MSP identity using our 
+cert and key file. This [MSP(Membership Service Provider)](https://hyperledger-fabric.readthedocs.io/en/release-1.3/msp.html)
+ identity will be able to connect to the 
+network and invoke smart contracts.
 
 ## 7. Add Identity
 ![packageFile](/docs/addIdentityScript.gif)
@@ -240,8 +244,8 @@ Next, we need to run `npm install` to install all the dependencies that
 are needed to connect to our local Fabric network. 
 Run `npm install` in the `VSCodeLocalNetwork`. Then, run `node addIdentity`.
 You should see that this command creates a new folder called `_idwallet` and 
-populates that folder with an identity, which in our case goes by the name 
-of ``
+populates that folder with the MSP identity, which in our case goes by the name 
+of
 `User1@org1.example.com`. Nice job! 
 
 
