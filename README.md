@@ -176,14 +176,17 @@ demoContract $ cd ..
 ```
 This will take you outside your `demoContract` directory.
 
-Then go ahead and clone my repository, and 
-then do a `ls` command inside the network to see what files we have.
+Then go ahead and clone my repository, with the following command:
 ```
 $ git clone https://github.com/horeaporutiu/VSCodeLocalNetwork.git
-$ cd VSCodeLocalNetwork
-$ ls
 ```
-You'll see the cert and key files which are certificates that will
+We'll need to import that folder into our workspace. To do that,
+right-click on an empty space under your `demoContract` directory
+and click `Add Folder to Workspace` and then find the newly cloned folder
+which is called `VSCodeLocalNetwork`, and double-click it. That will 
+bring our new folder into our workspace. Next, check out the
+`cert` and `key` files. 
+These are the certificates that will
 be used to prove our identity to the certificate authority. Our main
 logic comes from the `addIdentity.js` file. You'll see in that file
 which should look like this:
@@ -231,9 +234,18 @@ using that to create an identity by passing in our cert and private
 key that we got from the GitHub repo. The new identity will be stored
 in a folder called `_idwallet`.
 
+## 7. Add Identity
+![packageFile](/docs/addIdentityScript.gif)
+Next, we need to run `npm install` to install all the dependencies that 
+are needed to connect to our local Fabric network. 
+Run `npm install` in the `VSCodeLocalNetwork`. Then, run `node addIdentity`.
+You should see that this command creates a new folder called `_idwallet` and 
+populates that folder with an identity, which in our case goes by the name 
+of ``
+`User1@org1.example.com`. Nice job! 
 
 
-## 7. Update network ports
+## 8. Update network ports
 ![packageFile](/docs/networkPorts.gif)
 Next, let's create our network file which will specify which ports our 
 docker containers are running on. Create a new file called `network.yaml` in 
