@@ -4,9 +4,9 @@ In tutorial, we will learn the process of using IBM Blockchain Platform's VSCode
 to  streamline the 
 process of developing, testing, and deploying a smart contract. The audience for this 
 tutorial is a developer that has some basic understanding of blockchain, and wants to 
-understand how to deploy a network to a Hyperledger fabric instance. Once you finish the 
+understand how to deploy a network to a Hyperledger Fabric instance. Once you finish the 
 tutorial, you will understand how to quickly develop, demo, and deploy your blockchain
-application on a multi-organization network using VSCode. 
+application on a local Hyperledger Fabric network using VSCode. 
 
 ### Prerequisites
 
