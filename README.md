@@ -294,6 +294,7 @@ certificateAuthorities:
 Nice. Save the file.
 
 ## 9. Invoke Smart Contract
+![packageFile](/docs/invoke.gif)
 Ok, so we've instantiated our contract, created our identity, so now what?
 Well now, let's actually invoke it! To do this, we will need a script.
 That's where our `invoke.js` comes in. Let's take a look at the file.
