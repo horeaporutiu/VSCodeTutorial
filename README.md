@@ -148,7 +148,7 @@ take you to your channel view, which should show one channel, named `mychannel`.
 `Install Smart Contract`. Next, the extension will ask you which package, and just choose
 `demoContract@0.0.1`. That's it! Nice job!
 
-## 4. Instantiate Smart Contract
+## 5. Instantiate Smart Contract
 ![packageFile](/docs/instantiateSmartContract.gif)
 This is the real test - will our smart contract instantiate properly? Let's see.
 From the IBM Blockchain extension, in the bottom-left corner, under `Blockchain Connections`,
@@ -159,52 +159,27 @@ Next, it will ask you the arguments, for which there are none, so just hit enter
 do some work, and then you should see in the bottom-right corner that the contract was successfully
 instantiated. Hooray!! 🤟🏼
 
-## 5. Import certificate and key
-![packageFile](/docs/createCertsAndScript.gif)
+## 6. Import certificate and key
+<!-- ![packageFile](/docs/createCertsAndScript.gif) -->
 At this point, we need to start interacting a bit more closely with our
 Fabric instance. We'll need to import some certs to prove to the certificate
 authority that we are allowed to create a digital identity on the network, and 
-that is by showing the certificate authority our certificate and private key.
-First, let's create a seperate folder for our identity work,
-since we want to keep our contract directory as lightweight as possible.
-Create a new folder called `fabricNetwork`. Go into your newly created directory
-and with the following command: 
+that is by showing the certificate authority our certificate and private key. For the sake of keeping this tutorial as short as possible,
+I have made a GitHub repo with all the certs, keys, and scripts we 
+will work with, so go ahead and git clone this repo in your current
+workspace. So go ahead and go outside `demoContract` to clone this 
+directory - we want to keep our smart contract directory as 
+lightweight as possible. Then go ahead and clone my repository, and 
+then do a `ls` command inside the network to see what files we have.
 ```
-$ cd network
+$ git clone https://github.com/horeaporutiu/VSCodeLocalNetwork.git
+$ cd VSCodeLocalNetwork
+$ ls
 ```
-Now, we'll create a few files that will hold certificates that will 
-be used to grant us a digital identity. First create a new file 
-called `cert` and paste in the following code in there:
-```
------BEGIN CERTIFICATE-----
-MIICGTCCAb+gAwIBAgIQPyhm+v0ZIqCo6MATzLc+5jAKBggqhkjOPQQDAjBzMQsw
-CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
-YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu
-b3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa
-MFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T
-YW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZVc2VyMUBvcmcxLmV4YW1wbGUuY29tMFkw
-EwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEL/SomNVO3R5nnsemQ4im/UUZ8Ixs7/nH
-3NH1ROfVJ+m7niDf1ZmhvTyiJzrUpI+n5+/OKIX/Z/VhDuAIR/QLLKNNMEswDgYD
-VR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64
-ugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDSAAwRQIhAJk63AHS
-CEvJh64Yx5CnWDgDYNoj0jsi+gGheIxbUYgMAiAi/qPG7KEuuDBL4LlZRfkeatMW
-ZKPD7ikt+vOYgVnqlA==
------END CERTIFICATE-----
-
-```
-
-Save the file! Similarly, create another file called `key`, and paste in the following private key:
-```
------BEGIN PRIVATE KEY-----
-MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgJ8IrEgxfZzjGsyt+
-0o27jvhwUJE2W1PrFeZi8LwHbiuhRANCAAQv9KiY1U7dHmeex6ZDiKb9RRnwjGzv
-+cfc0fVE59Un6bueIN/VmaG9PKInOtSkj6fn784ohf9n9WEO4AhH9Ass
------END PRIVATE KEY-----
-
-```
-And save the file! 
-Next, create a file called `addIdentity.js` and paste in the following
-code: 
+You'll see the cert and key files which are certificates that will
+be used to prove our identity to the certificate authority. Our main
+logic comes from the `addIdentity.js` file. You'll see in that file
+which should look like this:
 
 ```
 'use strict';
@@ -243,70 +218,13 @@ main().then(()=>{
     process.exit(-1);
 });
 ```
-Save the file. Great. We're doing amazing so far. Only a few more things and you'll 
-be ready to invoke that smart contract! In terms of the code above, 
+In terms of the code above, 
 we are importing the new `fabric-network` module from NPM, and then 
 using that to create an identity by passing in our cert and private 
-key that we created in the previous steps. The new identity will be stored
+key that we got from the GitHub repo. The new identity will be stored
 in a folder called `_idwallet`.
 
-## 6. Create Identity
-![packageFile](/docs/addIdentity.gif)
-Now that we have our certs set up, we are ready to create our digital
-identity. Let's create a new file called `addIdentity.js` and paste in the
-following code:
 
-```
-'use strict';
-
-// Bring key classes into scope, most importantly Fabric SDK network class
-const fs = require('fs');
-const { FileSystemWallet, X509WalletMixin } = require('fabric-network');
-
-// A wallet stores a collection of identities for use
-const wallet = new FileSystemWallet('./_idwallet');
-
-async function main(){
-
-    // Main try/catch block
-    try {
-
-        // define the identity to use
-        const cert = fs.readFileSync('./cert').toString();
-        const key = fs.readFileSync('./key').toString();
-        const identityLabel = 'User1@org1.example.com';
-
-        // prep wallet and test it at the same time
-        await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));
-
-    } catch (error) {
-        console.log(`Error adding to wallet. ${error}`);
-        console.log(error.stack);
-    }
-}
-
-main().then(()=>{
-    console.log('done');
-}).catch((e)=>{
-    console.log(e);
-    console.log(e.stack);
-    process.exit(-1);
-});
-```
-and then save that file. Next, run `npm init`, and just hit enter so you
-get all the defaults. Next, we need to install the dependency that our script
-uses, and we will use npm for that. Run the following to save the dependency in 
-your `package.json`:
-
-`npm install fabric-network --save`
-
-You may have some vulnerabilities in your packages, like me. If so,
-run `npm audit fix`.
-
-Now, run the script:
-
-`node addIdentity.js`. This should have created a folder called `_idwallet`
-and saved certs and keys in there. Nice, we are sooo close!
 
 ## 7. Update network ports
 ![packageFile](/docs/networkPorts.gif)
@@ -619,3 +537,151 @@ Open `enrolladmin.js` and the newly downloaded `creds.json` in an editor of your
 
 at this point, you can go into your terminal and run `$ docker ps` to see the containers. You should
 have 4 at this point, namely, the peer, orderer, CA, and couchdb. Nice job :) -->
+
+<!-- First, let's create a seperate folder for our identity work,
+since we want to keep our contract directory as lightweight as possible.
+Create a new folder called `fabricNetwork`. Go into your newly created directory
+and with the following command: 
+```
+$ cd fabricNetwork
+```
+Then clone my files into that fabricNetwork directory:
+```
+$ cd fabricNetwork
+```
+
+Now, we'll create a few files that will hold certificates that will 
+be used to grant us a digital identity. First create a new file 
+called `cert` and paste in the following code in there:
+```
+-----BEGIN CERTIFICATE-----
+MIICGTCCAb+gAwIBAgIQPyhm+v0ZIqCo6MATzLc+5jAKBggqhkjOPQQDAjBzMQsw
+CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
+YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu
+b3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa
+MFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T
+YW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZVc2VyMUBvcmcxLmV4YW1wbGUuY29tMFkw
+EwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEL/SomNVO3R5nnsemQ4im/UUZ8Ixs7/nH
+3NH1ROfVJ+m7niDf1ZmhvTyiJzrUpI+n5+/OKIX/Z/VhDuAIR/QLLKNNMEswDgYD
+VR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64
+ugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDSAAwRQIhAJk63AHS
+CEvJh64Yx5CnWDgDYNoj0jsi+gGheIxbUYgMAiAi/qPG7KEuuDBL4LlZRfkeatMW
+ZKPD7ikt+vOYgVnqlA==
+-----END CERTIFICATE-----
+
+```
+
+Save the file! Similarly, create another file called `key`, and paste in the following private key:
+```
+-----BEGIN PRIVATE KEY-----
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgJ8IrEgxfZzjGsyt+
+0o27jvhwUJE2W1PrFeZi8LwHbiuhRANCAAQv9KiY1U7dHmeex6ZDiKb9RRnwjGzv
++cfc0fVE59Un6bueIN/VmaG9PKInOtSkj6fn784ohf9n9WEO4AhH9Ass
+-----END PRIVATE KEY-----
+
+```
+And save the file! 
+Next, create a file called `addIdentity.js` and paste in the following
+code: 
+
+```
+'use strict';
+
+// Bring key classes into scope, most importantly Fabric SDK network class
+const fs = require('fs');
+const { FileSystemWallet, X509WalletMixin } = require('fabric-network');
+
+// A wallet stores a collection of identities for use
+const wallet = new FileSystemWallet('./_idwallet');
+
+async function main(){
+
+    // Main try/catch block
+    try {
+
+        // define the identity to use
+        const cert = fs.readFileSync('./cert').toString();
+        const key = fs.readFileSync('./key').toString();
+        const identityLabel = 'User1@org1.example.com';
+
+        // prep wallet and test it at the same time
+        await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));
+
+    } catch (error) {
+        console.log(`Error adding to wallet. ${error}`);
+        console.log(error.stack);
+    }
+}
+
+main().then(()=>{
+    console.log('done');
+}).catch((e)=>{
+    console.log(e);
+    console.log(e.stack);
+    process.exit(-1);
+});
+```
+Save the file. Great. We're doing amazing so far. Only a few more things and you'll 
+be ready to invoke that smart contract! In terms of the code above, 
+we are importing the new `fabric-network` module from NPM, and then 
+using that to create an identity by passing in our cert and private 
+key that we created in the previous steps. The new identity will be stored
+in a folder called `_idwallet`.
+
+## 6. Create Identity
+![packageFile](/docs/addIdentity.gif)
+Now that we have our certs set up, we are ready to create our digital
+identity. Let's create a new file called `addIdentity.js` and paste in the
+following code:
+
+```
+'use strict';
+
+// Bring key classes into scope, most importantly Fabric SDK network class
+const fs = require('fs');
+const { FileSystemWallet, X509WalletMixin } = require('fabric-network');
+
+// A wallet stores a collection of identities for use
+const wallet = new FileSystemWallet('./_idwallet');
+
+async function main(){
+
+    // Main try/catch block
+    try {
+
+        // define the identity to use
+        const cert = fs.readFileSync('./cert').toString();
+        const key = fs.readFileSync('./key').toString();
+        const identityLabel = 'User1@org1.example.com';
+
+        // prep wallet and test it at the same time
+        await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));
+
+    } catch (error) {
+        console.log(`Error adding to wallet. ${error}`);
+        console.log(error.stack);
+    }
+}
+
+main().then(()=>{
+    console.log('done');
+}).catch((e)=>{
+    console.log(e);
+    console.log(e.stack);
+    process.exit(-1);
+});
+```
+and then save that file. Next, run `npm init`, and just hit enter so you
+get all the defaults. Next, we need to install the dependency that our script
+uses, and we will use npm for that. Run the following to save the dependency in 
+your `package.json`:
+
+`npm install fabric-network --save`
+
+You may have some vulnerabilities in your packages, like me. If so,
+run `npm audit fix`.
+
+Now, run the script:
+
+`node addIdentity.js`. This should have created a folder called `_idwallet`
+and saved certs and keys in there. Nice, we are sooo close! -->
