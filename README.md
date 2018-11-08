@@ -259,19 +259,15 @@ Your output should look something like this:
 
 ![packageFile](/docs/ports.png)
 
- 🚧🚧🚧 Everyone's ports will be different, so you  
-cannot just copy 
-my port numbers   
+ 🚧🚧🚧 Everyone's ports will be different, so you  cannot just copy my port numbers 
 here, it wont work! 🚧🚧🚧 Next, look for `fabric-peer`,`fabric-ca`, 
 and `fabric-orderer` in the `docker ps` logs. It's gonna be jumbled up, probably, so 
-be careful here.
- The 5 digit number is the port
-number that we need to update in the appropriate place in the `network.yaml` file.
-So for the peer, ca, and orderer, we must update the `url` field as shown 
-above in the gif. 
+be careful here. The 5 digit number is the port number that we need to update in the
+appropriate place in the `network.yaml` file. So for the peer, ca, and orderer, we
+must update the `url` field as shown above in the gif. 
  
-So for the example above, I would change the ports in 
-`network.yaml` to the following. First the orderer: 
+So for the example above, I would change the ports in `network.yaml` to the
+following. First the orderer: 
 
 ```
 orderers:
