@@ -160,6 +160,7 @@ do some work, and then you should see in the bottom-right corner that the contra
 instantiated. Hooray!! 🤟🏼
 
 ## 5. Import certificate and key
+![packageFile](/docs/createCertsAndScript.gif)
 At this point, we need to start interacting a bit more closely with our
 Fabric instance. We'll need to import some certs to prove to the certificate
 authority that we are allowed to create a digital identity on the network, and 
