@@ -55,7 +55,8 @@ You can check your installed versions by running the following commands from a t
 8. [Update Network Ports](#step-8-update-network-ports)
 9. [Invoke Smart Contract](#step-9-invoke-smart-contract)
 10. [Conclusion](#step-10-conclusion)
-### Let's get started
+
+## Let's get started
 ![packageFile](/docs/installExtension.gif)
 First thing we need to do is to install the IBM Blockchain Platform VSCode extension. You will
 need to latest version of VSCode to do this. To see if you have the latest VSCode extension, go to
