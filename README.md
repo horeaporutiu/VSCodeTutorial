@@ -308,83 +308,12 @@ Now, run the script:
 `node addIdentity.js`. This should have created a folder called `_idwallet`
 and saved certs and keys in there. Nice, we are sooo close!
 
-## 7. Invoke Smart Contract
-Ok, so we've instantiated our contract, created our identity, so now what?
-Well now, let's actually invoke it! To do this, we will need a script.
-So in your `demoContract`
-directory, create a new file called, uhh... `invoke.js`. Let's go with that.
-Inside that file, paste the following code: 
-
-```
-'use strict';
-
-const yaml = require('js-yaml');
-const { FileSystemWallet, Gateway } = require('fabric-network');
-const fs = require('fs');
-
-// A wallet stores a collection of identities for use
-const wallet = new FileSystemWallet('./_idwallet');
-
-async function main() {
-
-  // A gateway defines the peers used to access Fabric networks
-  const gateway = new Gateway();
-
-  // Main try/catch block
-  try {
-    const identityLabel = 'User1@org1.example.com';
-    let connectionProfile = yaml.safeLoad(fs.readFileSync('.network.yaml', 'utf8'));
-
-    let connectionOptions = {
-      identity: identityLabel,
-      wallet: wallet
-    };
-
-    // Connect to gateway using application specified parameters
-    await gateway.connect(connectionProfile, connectionOptions);
-
-    console.log('Connected to Fabric gateway.');
-
-    // Get addressability to PaperNet network
-    const network = await gateway.getNetwork('mychannel');
-
-    console.log('Connected to mychannel. ');
-
-    // Get addressability to commercial paper contract
-    const contract = await network.getContract('demoContract');
-
-    console.log('\nSubmit commercial paper issue transaction.');
-
-    // issue commercial paper
-    let response = await contract.submitTransaction('transaction1', 'hello');
-    console.log('Response from invoking smart contract: ')
-    console.log(response);
-    return response;
-
-  } catch (error) {
-    console.log(`Error processing transaction. ${error}`);
-    console.log(error.stack);
-  } finally {
-    // Disconnect from the gateway
-    console.log('Disconnect from Fabric gateway.');
-    gateway.disconnect();
-  }
-}
-
-// invoke the main function, can catch any error that might escape
-main().then(() => {
-  console.log('done');
-}).catch((e) => {
-  console.log('Final error checking.......');
-  console.log(e);
-  console.log(e.stack);
-  process.exit(-1);
-});
-```
+## 7. Update network ports
 
 Next, let's create our network file which will specify which ports our 
 docker containers are running on. Create a new file called `network.yaml` in 
 the `fabricNetwork` directory. Copy and paste the following in the file: 
+
 
 ```
 ---
@@ -524,14 +453,9 @@ here, it wont work! 🚧🚧🚧
 
 Your output should look something like this: 
 
-```
-CONTAINER ID        IMAGE                                                                                                            COMMAND                  CREATED             STATUS              PORTS                                                                    NAMES9f8af06f9ec5        dev-peer0.org1.example.com-test-0.0.15-62bdb5d0ae297f9031f580f17140174afa0b8baf535010a3c5839d0b7155b40c          "/bin/sh -c 'cd /usr…"   2 hours ago         Up 2 hours
-                                                                    dev-peer0.org1.example.com-test-0.0.15d517b902f2e6        dev-peer0.org1.example.com-democontract-0.0.1-cc066c781a2bf814ca8d9f2590c684af30b6303bc9a11f302685c961f627f455   "/bin/sh -c 'cd /usr…"   5 hours ago         Up 5 hours                                                                    dev-peer0.org1.example.com-demoContract-0.0.1
-10b62da7acf9        hyperledger/fabric-peer:1.3.0                                                                                    "peer node start"        2 days ago          Up 5 hours          0.0.0.0:32827->7051/tcp, 0.0.0.0:32826->7052/tcp, 0.0.0.0:32825->7053/tcp   fabricvscodelocalfabric_peer0.org1.example.com_14efbf2354860        hyperledger/fabric-ca:1.3.0                                                                                      "sh -c 'fabric-ca-se…"   2 days ago          Up 5 hours          0.0.0.0:
-32822->7054/tcp                                                     fabricvscodelocalfabric_ca.example.com_12280813c735d        hyperledger/fabric-orderer:1.3.0                                                                                 "orderer"                2 days ago          Up 5 hours          0.0.0.0:32823->7050/tcp                                                     fabricvscodelocalfabric_orderer.example.com_1
-368dbf11b1cb        hyperledger/fabric-couchdb:0.4.13                                                                                "tini -- /docker-ent…"   2 days ago          Up 5 hours          4369/tcp
-, 9100/tcp, 0.0.0.0:32824->5984/tcp                                 fabricvscodelocalfabric_couchdb_1
-```
+![packageFile](/docs/ports.png)
+
+
 It's gonna be jumbled up, probably, so be careful here. We need to update 
 our `network.yaml` file in 3 places: the peer, orderer, and CA port. So look 
 for the first port number you see with those docker containers. Note that 
@@ -562,6 +486,80 @@ certificateAuthorities:
     url: http://localhost:32822
 ```
 Nice. Save the file.
+
+## 8. Invoke Smart Contract
+Ok, so we've instantiated our contract, created our identity, so now what?
+Well now, let's actually invoke it! To do this, we will need a script.
+So in your `demoContract`
+directory, create a new file called, uhh... `invoke.js`. Let's go with that.
+Inside that file, paste the following code: 
+
+```
+'use strict';
+
+const yaml = require('js-yaml');
+const { FileSystemWallet, Gateway } = require('fabric-network');
+const fs = require('fs');
+
+// A wallet stores a collection of identities for use
+const wallet = new FileSystemWallet('./_idwallet');
+
+async function main() {
+
+  // A gateway defines the peers used to access Fabric networks
+  const gateway = new Gateway();
+
+  // Main try/catch block
+  try {
+    const identityLabel = 'User1@org1.example.com';
+    let connectionProfile = yaml.safeLoad(fs.readFileSync('.network.yaml', 'utf8'));
+
+    let connectionOptions = {
+      identity: identityLabel,
+      wallet: wallet
+    };
+
+    // Connect to gateway using application specified parameters
+    await gateway.connect(connectionProfile, connectionOptions);
+
+    console.log('Connected to Fabric gateway.');
+
+    // Get addressability to PaperNet network
+    const network = await gateway.getNetwork('mychannel');
+
+    console.log('Connected to mychannel. ');
+
+    // Get addressability to commercial paper contract
+    const contract = await network.getContract('demoContract');
+
+    console.log('\nSubmit commercial paper issue transaction.');
+
+    // issue commercial paper
+    let response = await contract.submitTransaction('transaction1', 'hello');
+    console.log('Response from invoking smart contract: ')
+    console.log(response);
+    return response;
+
+  } catch (error) {
+    console.log(`Error processing transaction. ${error}`);
+    console.log(error.stack);
+  } finally {
+    // Disconnect from the gateway
+    console.log('Disconnect from Fabric gateway.');
+    gateway.disconnect();
+  }
+}
+
+// invoke the main function, can catch any error that might escape
+main().then(() => {
+  console.log('done');
+}).catch((e) => {
+  console.log('Final error checking.......');
+  console.log(e);
+  console.log(e.stack);
+  process.exit(-1);
+});
+```
 
 Hope you learned something, and if you find anything missing, encounter a nasty bug, error, etc. please open an issue on this repo above⤴⤴⤴⤴⤴! 🕷🕷🕷
 
