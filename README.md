@@ -45,7 +45,7 @@ You can check your installed versions by running the following commands from a t
 
 # Steps
 
-1. [Create a new smart contract project](#step-1-create-a-new-smart-contract-project)
+1. [Create a New Smart Contract Project](#step-1-create-a-new-smart-contract-project)
 2. [Modify Chaincode](#step-2-modify-chaincode)
 3. [Package Smart Contract](#step-3-package-smart-contract)
 4. [Install Smart Contract](#step-4-install-smart-contract)
