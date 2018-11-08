@@ -159,6 +159,107 @@ Next, it will ask you the arguments, for which there are none, so just hit enter
 do some work, and then you should see in the bottom-right corner that the contract was successfully
 instantiated. Hooray!! 🤟🏼
 
+## 5. Import certificate and key
+At this point, we need to start interacting a bit more closely with our
+Fabric instance. We'll need to import some certs to prove to the certificate
+authority that we are allowed to create a digital identity on the network, and 
+that is by showing the certificate authority our certificate and private key.
+First, let's create a seperate folder for our identity work,
+since we want to keep our contract directory as lightweight as possible.
+Create a new folder called `fabricNetwork`. Go into your newly created directory
+and with the following command: 
+```
+$ cd network
+```
+Now, we'll create a few files that will hold certificates that will 
+be used to grant us a digital identity. First create a new file 
+called `cert` and paste in the following code in there:
+```
+-----BEGIN CERTIFICATE-----
+MIICGTCCAb+gAwIBAgIQPyhm+v0ZIqCo6MATzLc+5jAKBggqhkjOPQQDAjBzMQsw
+CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
+YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu
+b3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa
+MFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T
+YW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZVc2VyMUBvcmcxLmV4YW1wbGUuY29tMFkw
+EwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEL/SomNVO3R5nnsemQ4im/UUZ8Ixs7/nH
+3NH1ROfVJ+m7niDf1ZmhvTyiJzrUpI+n5+/OKIX/Z/VhDuAIR/QLLKNNMEswDgYD
+VR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64
+ugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDSAAwRQIhAJk63AHS
+CEvJh64Yx5CnWDgDYNoj0jsi+gGheIxbUYgMAiAi/qPG7KEuuDBL4LlZRfkeatMW
+ZKPD7ikt+vOYgVnqlA==
+-----END CERTIFICATE-----
+
+```
+
+Similarly, create another file called `key`, and paste in the following private key:
+```
+-----BEGIN PRIVATE KEY-----
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgJ8IrEgxfZzjGsyt+
+0o27jvhwUJE2W1PrFeZi8LwHbiuhRANCAAQv9KiY1U7dHmeex6ZDiKb9RRnwjGzv
++cfc0fVE59Un6bueIN/VmaG9PKInOtSkj6fn784ohf9n9WEO4AhH9Ass
+-----END PRIVATE KEY-----
+
+```
+Next, create a file called `addIdentity.js` and paste in the following
+code: 
+
+```
+'use strict';
+
+// Bring key classes into scope, most importantly Fabric SDK network class
+const fs = require('fs');
+const { FileSystemWallet, X509WalletMixin } = require('fabric-network');
+
+// A wallet stores a collection of identities for use
+const wallet = new FileSystemWallet('./_idwallet');
+
+async function main(){
+
+    // Main try/catch block
+    try {
+
+        // define the identity to use
+        const cert = fs.readFileSync('./cert').toString();
+        const key = fs.readFileSync('./key').toString();
+        const identityLabel = 'User1@org1.example.com';
+
+        // prep wallet and test it at the same time
+        await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));
+
+    } catch (error) {
+        console.log(`Error adding to wallet. ${error}`);
+        console.log(error.stack);
+    }
+}
+
+main().then(()=>{
+    console.log('done');
+}).catch((e)=>{
+    console.log(e);
+    console.log(e.stack);
+    process.exit(-1);
+});
+```
+Great. We're doing amazing so far. Only a few more things and you'll 
+be ready to invoke that smart contract! In terms of the code above, 
+we are importing the new `fabric-network` module from NPM, and then 
+using that to create an identity by passing in our cert and private 
+key that we created in the previous steps. The new identity will be stored
+in a folder called `_idwallet`.
+
+```
+
+```
+
+## 5. Invoke Smart Contract
+Ok, so we've instantiated our contract, now what? Well now, let's actually
+invoke it! To do this, we will need a script. So in your `demoContract`
+directory, create a new file called, uhh... `invoke.js`. Let's go with that.
+Inside that file, paste the following code: 
+
+```
+```
 
 <!-- ## Included components
 
