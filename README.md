@@ -251,7 +251,7 @@ key that we created in the previous steps. The new identity will be stored
 in a folder called `_idwallet`.
 
 ## 6. Create Identity
-![packageFile](/docs/createCertsAndScript.gif)
+![packageFile](/docs/addIdentity.gif)
 Now that we have our certs set up, we are ready to create our digital
 identity. Let's create a new file called `addIdentity.js` and paste in the
 following code:
@@ -299,6 +299,9 @@ uses, and we will use npm for that. Run the following to save the dependency in
 your `package.json`:
 
 `npm install fabric-network --save`
+
+You may have some vulnerabilities in your packages, like me. If so,
+run `npm audit fix`.
 
 Now, run the script:
 
