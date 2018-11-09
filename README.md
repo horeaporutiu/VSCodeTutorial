@@ -91,7 +91,7 @@ const { Contract } = require('fabric-contract-api');
 class MyContract extends Contract {
 
     async instantiate(ctx) {
-      let greeting = { text: 'Hi' };
+      let greeting = { text: 'Instantiate was called!' };
       await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
     }
 
@@ -99,7 +99,7 @@ class MyContract extends Contract {
         console.info('transaction1', arg1);
         let greeting = { text: arg1 };
         await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
-        return greeting;
+        return JSON.stringify(greeting);
     }
 
 }
