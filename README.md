@@ -368,10 +368,10 @@ VSCodeLocalNetwork$ node invoke.js
 Connected to Fabric gateway.
 Connected to mychannel.
 
-Submit commercial paper issue transaction.
-info: [TransactionEventHandler]: _strategySuccess: strategy success for transaction "b1ec70fd8cd69b9b41f9680a84b1fed1d102d829299853da303ec40a3f6ac8a9"
-Response from invoking smart contract:
-<Buffer 75 6e 64 65 66 69 6e 65 64>
+Submit hello world transaction.
+info: [TransactionEventHandler]: _strategySuccess: strategy success for transaction "9bf00460721a9d42dfe0d3bf93151f10be8b0a57011d4b24262ef03d5a33ee5e"
+
+{ text: 'hello' }
 Disconnect from Fabric gateway.
 done
 ```
