@@ -118,6 +118,20 @@ with the key-value pair of
   }
 }
 ```
+
+🚧🚧🚧 Note: the chaincode has been updated to the following, 
+but the following gifs don't reflect that - don't worry, if you have
+the below chaincode, you are all good! 
+
+```
+async transaction1(ctx, arg1) {
+        console.info('transaction1', arg1);
+        let greeting = { text: arg1 };
+        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+        return JSON.stringify(greeting);
+    }
+```
+
 Not much going on here, since this is a hello-world 
 tutorial, but it shows up the basics of updating the 
 ledger, which is the most important part of being a 
