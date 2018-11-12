@@ -58,8 +58,9 @@ You can check your installed versions by running the following commands from a t
 
 ## Let's get started
 ![packageFile](/docs/installExtension.gif)
-First thing we need to do is to install the IBM Blockchain Platform VSCode extension. You will
-need to latest version of VSCode to do this. To see if you have the latest VSCode extension, go to
+First thing we need to do is to install the IBM Blockchain Platform VSCode extension. You 
+will need to install the latest version of VSCode to do this. To see if you have the latest 
+VSCode extension, go to
 `Code` -> `Check for Updates`. If VSCode crashes at this point (which it did for me), it likely
 means you don't have the latest version. Check the troubleshooting section below if your VSCode
 crashed. Otherwise, update your VSCode, and once you're done, click on `extensions` on the 
@@ -107,7 +108,7 @@ class MyContract extends Contract {
 module.exports = MyContract;
 ```
 
-It's not much, but it will the 
+It's not much, but the 
 `await ctx.stub.putState('GREETING', Buffer.from
 (JSON.stringify(greeting)));` line will update the ledger
 with the key-value pair of 
