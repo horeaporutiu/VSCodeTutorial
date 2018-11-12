@@ -117,14 +117,7 @@ module.exports = MyContract;
 The 
 `await ctx.stub.putState('GREETING', Buffer.from
 (JSON.stringify(greeting)));` line will update the ledger
-with the key-value pair of 
-```
-{
-  "GREETING": {
-    "text": "hi" 
-  }
-}
-```
+with the `greeting` object.
 
 🚧🚧🚧 Note: the chaincode has been updated to the following, 
 but the following gifs don't reflect that - don't worry, if you have
