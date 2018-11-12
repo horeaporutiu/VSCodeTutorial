@@ -17,6 +17,8 @@ You will need the following installed in order to use the extension:
 - [Yeoman (yo) v2.x](http://yeoman.io/)
 - [Docker version v17.06.2-ce or greater](https://www.docker.com/get-docker)
 - [Docker Compose v1.14.0 or greater](https://docs.docker.com/compose/install/)
+- [VSCode 1.28.2 or higher](https://code.visualstudio.com/download)
+
 
 If you are using Windows, you must also ensure the following:
 - Your version of Windows supports Hyper-V and Docker:
