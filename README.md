@@ -2,8 +2,8 @@
 
 In this tutorial, we will learn the process of using IBM Blockchain Platform's VSCode extension 
 to  streamline the 
-process of developing, testing, and deploying a smart contract. Once you finish the 
-tutorial, you will understand how to quickly develop, demo, and deploy your blockchain
+process of developing, testing, and deploying a smart contract. Once we finish the 
+tutorial, we will understand how to quickly develop, demo, and deploy blockchain
 application on a local Hyperledger Fabric network using VSCode. This tutorial assumes some
 basic understanding of Hyperledger Fabric.
 
@@ -13,13 +13,11 @@ basic understanding of Hyperledger Fabric.
 
 ### Prerequisites
 
-You will need the following installed in order to use the extension:
 - [Node v8.x or greater and npm v5.x or greater](https://nodejs.org/en/download/)
 - [Yeoman (yo) v2.x](http://yeoman.io/)
 - [Docker version v17.06.2-ce or greater](https://www.docker.com/get-docker)
 - [Docker Compose v1.14.0 or greater](https://docs.docker.com/compose/install/)
 - [VSCode 1.28.2 or higher](https://code.visualstudio.com/download)
-
 
 If you are using Windows, you must also ensure the following:
 - Your version of Windows supports Hyper-V and Docker:
@@ -39,11 +37,12 @@ You can check your installed versions by running the following commands from a t
 - `docker-compose --version`
 
 ### Learning Objectives
-- Get, install, and troubleshoot your IBM Blockchain Platform VSCode Extension
-- Create a new smart contract project using Node.js with the VSCode Extension
-- Explore, understand, and package the smart contract
-- Deploy the smart contract on both IBM Cloud and local Hyperledger Fabric instance
-- Use SDK to interact with deployed Smart Contract package
+- Install the IBM Blockchain Platform VSCode Extension
+- Create a new JavaScript smart contract
+- Package a smart contract
+- Create, explore and understand a Hyperledger Fabric Network
+- Deploy the smart contract on a local Hyperledger Fabric instance
+- Use Node.js SDK to interact with deployed Smart Contract package
 
 ### Estimated time
 - After the prerequisites are installed, this should take <b>approximately 30-45 minutes</b> to complete.
