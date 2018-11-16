@@ -1,6 +1,6 @@
 # Use IBM Blockchain Platform extension in VSCode to develop a Smart Contract
 
-In tutorial, we will learn the process of using IBM Blockchain Platform's VSCode extension 
+In this tutorial, we will learn the process of using IBM Blockchain Platform's VSCode extension 
 to  streamline the 
 process of developing, testing, and deploying a smart contract. Once you finish the 
 tutorial, you will understand how to quickly develop, demo, and deploy your blockchain
