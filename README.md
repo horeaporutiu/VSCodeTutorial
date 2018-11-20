@@ -64,24 +64,27 @@ You can check your installed versions by running the following commands from a t
 ![packageFile](/docs/installExtension.gif)
 First thing we need to do is to install the IBM Blockchain Platform VSCode extension. You 
 will need to install the latest version of VSCode to do this. To see if you have the latest 
-VSCode extension, go to
-`Code` -> `Check for Updates`. If VSCode crashes at this point (which it did for me), it likely
-means you don't have the latest version. Check the troubleshooting section below if your VSCode
-crashed. Otherwise, update your VSCode, and once you're done, click on `extensions` on the 
-side bar on the left part of your screen. At the top, search the extension marketplace for 
-`IBM Blockchain Platform`. Click on `Install`. Then click on
-`reload`. Nice, you are all set to use the extension! 🙌🏼
+VSCode extension, go to `Code` -> `Check for Updates`. If VSCode crashes at this point 
+(which it did for me), it likely means you don't have the latest version. If so, 
+update your VSCode, and once you're done, click on `extensions` on the side bar on the left 
+part of your screen. At the top, search the extension marketplace for 
+`IBM Blockchain Platform`. Click on `Install`. Then click on `reload`. Nice, you 
+are all set to use the extension!
 
 ## Step 1. Create a New Smart Contract Project
 ![packageFile](/docs/createSmartContract.gif)
-To create a smart contract project, click on your newly
-downloaded IBM Blockchain Platform extension. It should be the extension all the way at the bottom of the left side bar. Next, use the keyboard shortcut `Shift` + `CMD` + `P` to 
-bring up all of the commands for the IBM Blockchain Platform. Choose 
-`Create Smart Contract Project` from the dropdown. Next,
-click `JavaScript` from the dropdown. Next, click `New Folder`, and name the project what you want. I named mine
-`demoContract`. Click `Create` and then `Open` your new folder which you just created. Next, you'll be prompted with a dropdown, and you can click `Add to Workspace`. Once the extension is done packaging your
-contract, you can open the `lib/my-contract.js` file to see your smart 
-contract code scaffold. Nice job! 👏🏼
+
+To create a smart contract project: 
+
+1. Click on your newly downloaded IBM Blockchain Platform extension. It should be the extension
+all the way at the bottom of the left side bar.
+2. Next, use the keyboard shortcut `Shift` + `CMD` + `P` to 
+bring up the command pallete. Choose **IBM Blockchain Platform: Create Smart Contract Project** from the dropdown.
+3. Click **JavaScript** from the dropdown. 
+4. Click **New Folder**, and name the project what you want. I named mine `demoContract`.
+5. Click **Create** and then **Open** your new folder which you just created. Next, from the dropdown, click **Add to Workspace**.
+6. Once the extension is done packaging your contract, you can open the `lib/my-contract.js` file to see your smart 
+contract code scaffold. Nice job!
 
 ## Step 2. Modify Chaincode 
 ![packageFile](/docs/addChaincode.gif)
@@ -95,128 +98,114 @@ const { Contract } = require('fabric-contract-api');
 
 class MyContract extends Contract {
 
-    //update ledger with a greeting to show that the function was called
-    async instantiate(ctx) {
-      let greeting = { text: 'Instantiate was called!' };
-      await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
-    }
+  //update ledger with a greeting to show that the function was called
+  async instantiate(ctx) {
+    let greeting = { text: 'Instantiate was called!' };
+    await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+  }
 
-    //take argument and create a greeting object to be updated to the ledger
-    async transaction1(ctx, arg1) {
-        console.info('transaction1', arg1);
-        let greeting = { text: arg1 };
-        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
-        return JSON.stringify(greeting);
-    }
+  //take argument and create a greeting object to be updated to the ledger
+  async transaction1(ctx, arg1) {
+    console.info('transaction1', arg1);
+    let greeting = { text: arg1 };
+    await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+    return JSON.stringify(greeting);
+  }
 
 }
 
 module.exports = MyContract;
 ```
 
-The 
-`await ctx.stub.putState('GREETING', Buffer.from
-(JSON.stringify(greeting)));` line will update the ledger
-with the `greeting` object.
+<!-- **Please note:** the gifs may not match the following function, but this is the one 
+you should have in your `lib/my-contract.js` file now!  -->
 
-🚧🚧🚧 Note: the chaincode has been updated to the following, 
-but the following gifs don't reflect that - don't worry, if you have
-the below chaincode, you are all good! 
-
-```
-async transaction1(ctx, arg1) {
-        console.info('transaction1', arg1);
-        let greeting = { text: arg1 };
-        await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
-        return JSON.stringify(greeting);
-    }
-```
-
-Not much going on here, since this is a hello-world 
-tutorial, but it shows up the basics of updating the 
-ledger, which is the most important part of being a 
-blockchain developer. Also, in `transaction1` you will see that we 
-are actually returning an object, so we will be able to see if 
-our smart contract is invoked successfully since we can inspect the
-object that is returned from this function. Save the file, and proceed! Good job! 🔥
+Let's examine the functions we defined. The `instantiate` function creates a greeting 
+object and then stores that on the ledger with the key `GREETING`. 
+The `transaction1` function takes the Hyperledger
+Fabric context, and one argument, `arg1` which is used to store a greeting as defined by the user.
+The `ctx.stub.putState` method is used to record the `greeting` on the ledger and then we 
+return that object back. Save the file, and proceed!
 
 ## Step 3. Package Smart Contract
 ![packageFile](/docs/packageSmartContract.gif)
-Now that we have created our smart contract, it's time to package it so we can 
-connect to a Hyperledger Fabric instance. Let's do our favorite keyboard shortcut 
-again, `Shift` + `CMD` + `P` and then look for `package smart contract`, and click 
-on that. The extension will do the rest for you, so sit back, relax, and drink some ☕️.
-In the left sidebar, click on the IBM Blockchain Platform icon. This click will take you
-into another dimension - the blockchain dimension. On the top-left corner, you will 
-have all of your smart contract packages. You should see `demoContract@0.0.1` if 
-everything went well. Nice job! Time to install, and instantiate this contract! 🙌🏼
+Now that we have created our smart contract and understood which functions we defined,
+it's time to package it so we can install it on a peer.
+
+1. Open the command pallete with `Shift` + `CMD` + `P` and select **package smart contract**
+2. In the left sidebar, click on the IBM Blockchain Platform icon (it looks like a square). 
+On the top-left corner, you will have all of your smart contract packages. You should 
+see `demoContract@0.0.1` if everything went well. 
 
 ## Step 4. Install Smart Contract
 ![packageFile](/docs/installSmartContract.gif)
+
 Ok, we're more than halfway there. Now for the fun part! Let's install this contract on the peer!
 To do this, we must first connect to a Hyperledger Fabric network. The network that comes with
-the VSCode extension is perfect for development - it offers the minimal set up to develop, and 
-test your contract. The network consists of a peer, an orderer, a certificate authority, and 
-a couchdb instance, all running on seperate docker containers. To start our network, look at 
-your IBM Blockchain Platform extension, at the bottom-right corner where it says `Blockchain Connections`.
-You should see something that says `local_fabric`. Go ahead and click that. That should 
-automatically run a script and you should see the output as follows: 
+the VSCode extension is perfect for development - it offers the minimal resources to develop and 
+test your contract.
+
+The following Docker containers are started on your local machine, each with a different role in
+the network: Orderer, Certificate Authority, CouchDB, and Peer. 
+
+To start our network, look at your IBM Blockchain Platform extension, at the bottom-right corner
+where it says `Blockchain Connections`. 
+
+1. You should see `local_fabric`. Go ahead and click that.
+That should automatically run a script and you should see the output as follows: 
 ```
 Starting fabricvscodelocalfabric_orderer.example.com_1 ... done
 Starting fabricvscodelocalfabric_ca.example.com_1      ... done
 Starting fabricvscodelocalfabric_couchdb_1             ... done
 Starting fabricvscodelocalfabric_peer0.org1.example.com_1 ... done
 ``` 
-Which shows the docker containers starting up. There is additional output too.
-Nice. Now, click the `local_fabric` connection again. Now that it's up and running, it should 
+
+2. Click the `local_fabric` connection again. Now that it's up and running, it should 
 take you to your channel view, which should show one channel, named `mychannel`. Click on 
-`mychannel`, and it will expand the `Peers` and `Instantiated Smart Contracts`. Click on 
+`mychannel`.
+3. This will expand your channel and show the peers and smart contracts. Click on 
 `peers` and you should see `peer0.org1.example.com`. Right-click on that peer, and click on
-`Install Smart Contract`. Next, the extension will ask you which package, and just choose
-`demoContract@0.0.1`. That's it! Nice job!
+`Install Smart Contract`.
+4. The extension will ask you which package to install, so choose `demoContract@0.0.1`. That's it! Nice job!
 
 ## Step 5. Instantiate Smart Contract
 ![packageFile](/docs/instantiateSmartContract.gif)
+
 This is the real test - will our smart contract instantiate properly? Let's see.
-From the IBM Blockchain extension, in the bottom-left corner, under `Blockchain Connections`,
-right-click on `mychannel` and then on `Instantiate / Upgrade Smart Contract`. The extension
-will then ask you which contract and version to instantiate, and we will pick `demoContract@0.0.1`. 
-The extension will then ask you which function to call. You can go ahead and type in `instantiate`.
-Next, it will ask you the arguments, for which there are none, so just hit enter. The extension will
-do some work, and then you should see in the bottom-right corner that the contract was successfully
-instantiated. Hooray!! 🤟🏼
+1. From the IBM Blockchain extension, in the bottom-left corner, under `Blockchain Connections`,
+right-click on `mychannel` and then on `Instantiate / Upgrade Smart Contract`.
+2. The extension will then ask you which contract and version to instantiate - choose `demoContract@0.0.1`.
+3. The extension will then ask you which function to call - type in `instantiate`.
+4. Next, it will ask you the arguments, for which there are none, so just hit enter.
+
+The extension will do some work, and then you should see in the bottom-right corner that the contract
+was successfully instantiated. Hooray!!
 
 ## Step 6. Import certificate and key
 ![packageFile](/docs/gitPull.gif)
+
 At this point, we need to start interacting a bit more closely with our
-Fabric instance. We'll need to import some certs to prove to the certificate
-authority that we are allowed to create a digital identity on the network, and 
-that is by showing the certificate authority our certificate and private key. For the sake of keeping this tutorial as short as possible,
-I have made a GitHub repo with all the certs, keys, and scripts we 
-will work with, so go ahead and git clone this repo in your current
-workspace. So go ahead and go outside `demoContract` to clone this 
-directory - we want to keep our smart contract directory as 
-lightweight as possible. To do this, just issue the following command:
+Fabric instance. We'll need to prove to the certificate authority that we are allowed
+to create a digital identity on the network, and that is by showing the certificate
+authority our certificate and private key. For the sake of keeping this tutorial as short as possible,
+I have a GitHub repo with all the certs, keys, and scripts we 
+will work with, so go ahead and git clone this repo in a directory of your choice, but outside
+the `demoContract` directory.
 
-```
-demoContract $ cd ..
-```
-This will take you outside your `demoContract` directory.
+1. In a terminal, navigate to a directory to clone the GitHub repository into.
 
-Then go ahead and clone my repository, with the following command:
-```
-$ git clone https://github.com/horeaporutiu/VSCodeLocalNetwork.git
-```
-We'll need to import that folder into our workspace. To do that,
-right-click on an empty space under your `demoContract` directory
-and click `Add Folder to Workspace` and then find the newly cloned folder
-which is called `VSCodeLocalNetwork`, and double-click it. That will 
-bring our new folder into our workspace. Next, check out the
-`cert` and `key` files. 
-These are the certificates that will
-be used to prove our identity to the certificate authority. Our main
-logic comes from the `addIdentity.js` file. You'll see in that file
-which should look like this:
+2. Clone the GitHub repository by using the following command:
+
+  ```
+  $ git clone https://github.com/horeaporutiu/VSCodeLocalNetwork.git
+  ```
+
+3. Import this folder into your VSCode workspace by right-clicking an empty space
+under your smart contract directory in VSCode and selecting **Add folder to workspace**. 
+Find the recently clone folder `VSCodeLocalNetwork` and double-click it.
+4. Skim the `cert` and `key` files - they contain our certificate and private key
+that will be used to request an identity from the certificate authority. There is 
+also a `addIdentity.js` script which has the following code: 
 
 ```
 'use strict';
@@ -255,46 +244,43 @@ main().then(()=>{
     process.exit(-1);
 });
 ```
-In terms of the code above, 
-we are importing the new `fabric-network` module from NPM, and then 
-using that to create an identity by passing in our cert and private 
-key that we got from the GitHub repo. The new identity will be stored
-in a folder called `_idwallet`. The most important line of this file
-is the `await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));` line which actually creates a new MSP identity using our 
-cert and key file. This [MSP(Membership Service Provider)](https://hyperledger-fabric.readthedocs.io/en/release-1.3/msp.html)
- identity will be able to connect to the 
+
+This code creates an identity by passing in our certificate and private key.
+Notice we are using the `fabric-network` NPM package to call the `createIdentity` method, 
+and then using the `import` function to add that identity to our wallet. The most important line of this file
+is the `await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));` line
+which actually creates a new MSP identity using our cert and key file. This [MSP(Membership Service Provider)]
+(https://hyperledger-fabric.readthedocs.io/en/release-1.3/msp.html) identity will be able to connect to the 
 network and invoke smart contracts.
 
 ## Step 7. Add Identity
 ![packageFile](/docs/addIdentityScript.gif)
-Next, we need to run `npm install` to install all the dependencies that 
-are needed to connect to our local Fabric network. 
-Run `npm install` in the `VSCodeLocalNetwork`. Then, run `node addIdentity`.
-You should see that this command creates a new folder called `_idwallet` and 
-populates that folder with the MSP identity, which in our case goes by the name 
-of
-`User1@org1.example.com`. Nice job! 
+Now that we have an identity that can interact with our network, we need to 
+to run `npm install` to install all the dependencies that are needed to connect to our local Fabric network. 
 
+1. Run `npm install` in the `VSCodeLocalNetwork`.
+2. Then, run `node addIdentity`. You should see that this command creates a new folder called `_idwallet`
+ and populates that folder with the MSP identity, which in our case goes by the name of
+`User1@org1.example.com`. Nice job! 
 
 ## Step 8. Update network ports
 ![packageFile](/docs/addPorts.gif)
-Next, open the `network.yaml` in the `VSCodeLocalNetwork` folder. We will use this file to connect 
-to our Docker containers running locally. To see your docker containers 
-running locally, run `docker ps`.
 
-Your output should look something like this: 
+1. Next, open the `network.yaml` in the `VSCodeLocalNetwork` folder. We will use this file to connect 
+to our Docker containers running locally.
+
+2. To see your docker containers running locally, run `docker ps`. Your output should look something like this: 
 
 ![packageFile](/docs/ports.png)
 
- 🚧🚧🚧 Everyone's ports will be different, so you  cannot just copy my port numbers 
-here, it wont work! 🚧🚧🚧 Next, look for `fabric-peer`,`fabric-ca`, 
-and `fabric-orderer` in the `docker ps` logs. It's gonna be jumbled up, probably, so 
-be careful here. The 5 digit number is the port number that we need to update in the
-appropriate place in the `network.yaml` file. So for the peer, ca, and orderer, we
-must update the `url` field as shown above in the gif. 
+**Important Note: your ports will differ from those shown** 
+
+3. Next, look for `fabric-peer`,`fabric-ca`, and `fabric-orderer` in the `docker ps` logs.
+It's likely going to be hard to read, so be careful here. The 5 digit number is the port 
+number that we need to update in the appropriate place in the `network.yaml` file.
+Update the peer, ca, and orderer's url field as shown in the preceding gif.
  
-So for the example above, I would change the ports in `network.yaml` to the
-following. First the orderer: 
+In the example above the ports in `network.yaml` would be set as follows:
 
 ```
 orderers:
@@ -318,38 +304,39 @@ certificateAuthorities:
   ca-org1:
     url: http://localhost:32822
 ```
-Nice. Save the file.
+4. Great job. Save the file.
 
 ## Step 9. Invoke Smart Contract
 ![packageFile](/docs/invoke.gif)
+
 Ok, so we've instantiated our contract, created our identity, so now what?
-Well now, let's actually invoke it! To do this, we will need a script.
-That's where our `invoke.js` comes in. Let's take a look at this file.
-After importing the `fabric-network` module, we use the identity stored
-in the `_idwallet` to connect to our fabric network. This happens on 
-this line 
+Well now, let's actually invoke the functions in our contract! To do this, 
+we will need to invoke a script from our `VSCodeLocalNetwork` directory. 
+
+1. From our git clone, we should have a file called `invoke.js`. Let's examine this file.
+
+2. After we create an instance of the `fabric-network`, we connect to the network with the following code:
 ```
 await gateway.connect(connectionProfile, connectionOptions);
 ```
 
-Notice here that our connection profile is the `network.yaml` file that 
-we updated in the previous step, and the `connectionOptions` is an object
-which contains the credentials from our `./_idwallet` directory. After we 
-connect to the network, we need to specify the channel to connect to, which 
+Notice here that the connection profile is the `network.yaml` file that we updated in the previous step, and the `connectionOptions` is an object which contains the credentials from our `_idwallet` directory. 
+
+3. After we connect to the network, we need to specify the channel to connect to, which 
 in our case happens to be `mychannel`. This line connects to our channel:
 
 ```
 const network = await gateway.getNetwork('mychannel');
 ```
-Our channel may 
-have many contracts installed, so in the next line, we specify which contract
-to invoke. Which in our case, is `demoContract`. 
+
+4. Our channel may have many contracts installed, so in the next line, we specify which contract
+to invoke. In our case, this is `demoContract`. 
 
 ```
 const contract = await network.getContract('demoContract');
 ```
- The final part 
-of our script picks which function to invoke, and specifies the arguments. In 
+
+5. The final part of our script picks which function to invoke, and specifies the arguments. In 
 our case we are invoking `transaction1` with an arg of `hello` as can be seen
 here: 
 
@@ -357,7 +344,8 @@ here:
 let response = await contract.submitTransaction('transaction1', 'hello');
 ```
 
-Now, we can run the script, by using this command:
+6. Now, we can run the script, with this command:
+
 ```
 $ node invoke.js
 ```
@@ -375,7 +363,8 @@ info: [TransactionEventHandler]: _strategySuccess: strategy success for transact
 Disconnect from Fabric gateway.
 done
 ```
-Woo!! That's it! You made it! 💪🏼💪🏼
+
+Woo!! That's it! Nice job!
 
 
 ## Step 10. Conclusion
