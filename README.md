@@ -249,8 +249,7 @@ This code creates an identity by passing in our certificate and private key.
 Notice we are using the `fabric-network` NPM package to call the `createIdentity` method, 
 and then using the `import` function to add that identity to our wallet. The most important line of this file
 is the `await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1MSP', cert, key));` line
-which actually creates a new MSP identity using our cert and key file. This [MSP(Membership Service Provider)]
-(https://hyperledger-fabric.readthedocs.io/en/release-1.3/msp.html) identity will be able to connect to the 
+which actually creates a new MSP identity using our cert and key file. This [MSP(Membership Service Provider)](https://hyperledger-fabric.readthedocs.io/en/release-1.3/msp.html) identity will be able to connect to the 
 network and invoke smart contracts.
 
 ## Step 7. Add Identity
