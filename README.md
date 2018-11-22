@@ -58,8 +58,9 @@ You can check your installed versions by running the following commands from a t
 7. [Adding an identity](#step-7-adding-an-identity)
 8. [Updating network ports](#step-8-updating-network-ports)
 9. [Invoking the smart contract](#step-9-invoking-the-smart-contract)
-10. [Querying the ledger](#step-10-querying-the-ledger)
-11. [Conclusion](#step-11-conclusion)
+10. [Updating the smart contract](#step-10-updating-the-smart-contract)
+11. [Querying the ledger](#step-11-querying-the-ledger)
+12. [Conclusion](#step-12-conclusion)
 
 ## Let's get started
 ![packageFile](/docs/installExtension.gif)
@@ -366,7 +367,7 @@ done
 
 Woo!! That's it! Nice job!
 
-### Step 10. Querying the Ledger
+### Step 10. Updating our smart contract 
 In the previous step, we updated the ledger by using the `putState` API, passing in a key and a value.
 The key happened to be "GREETING" and the value happened to be the object 
 ```
@@ -380,7 +381,6 @@ by using the `getState` API, which takes in a key, and returns the value associa
 Let's add a query function to our `demoContract`.
 
 1. Copy and paste the following code into your `lib/my-contract.js` file:
-
 ```
 'use strict';
 
@@ -395,11 +395,14 @@ class MyContract extends Contract {
   }
 
   //take argument and create a greeting object to be updated to the ledger
-  async transaction1(ctx, arg1) {
-    console.info('transaction1', arg1);
-    let greeting = { text: arg1 };
-    await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
-    return JSON.stringify(greeting);
+  async addMember(ctx, email, name, address, phoneNumber) {
+    let member = {
+      name: name,
+      address: address,
+      number: phoneNumber
+    };
+    await ctx.stub.putState(email, Buffer.from(JSON.stringify(member)));
+    return JSON.stringify(member);
   }
 
   async query(ctx, key) {
@@ -414,9 +417,13 @@ class MyContract extends Contract {
 module.exports = MyContract;
 ```
 
-This code adds a `query` function which returns the value associated with a given key. Save the file.
+The code adds an addMember function which takes in arguments from the user such as 
+email, name, address, and phone number, and saves that data on the ledger as a key-value pair. 
 
-2. Save the file, and update the `package.json` file such that the line 3, which 
+This code also adds a `query` function - this function takes in one argument, which is the key to look up. 
+The function returns the value associated with a given key, if there is any.
+
+2. Update the `package.json` file such that the line 3, which 
 contains the version number, now reads:
 
 ```
@@ -424,23 +431,127 @@ contains the version number, now reads:
 ```
 
 Save the file.
+
 3. After we have updated our package.json, go back and follow steps 3,4,5 to package, install, and 
 instantiate our new smart contract. 
+
 4. In our `invoke.js` file, change the following line
+
 ```
-let response = await contract.submitTransaction('transaction1', 'new text that will overwrite earlier text!');
+let response = await contract.submitTransaction('transaction1', 'hello');
 ```
 
 to the following:
 
 ```
-let response = await contract.submitTransaction('query', 'GREETING');
+let response = await contract.submitTransaction('addMember', 'ginny@ibm.com', 'Ginny Rometty', 'Wall Street, NY', '1234567890');
 ```
 
-### Step 11. Conclusion
+5. Save the file, and run the following command:
+
+```
+$ node invoke.js
+```
+
+You should get the following output: 
+
+```
+VSCodeLocalNetwork$ node invoke.js
+Connected to Fabric gateway.
+Connected to mychannel.
+Submit hello world transaction.
+info: [TransactionEventHandler]: _strategySuccess: strategy success for transaction "d97fa4844c3135153228200578553423df3c8ff59fc54506c9421e16d7cc9a0b"
+{ name: 'Ginny Rometty',
+  address: 'Wall Street, NY',
+  number: '1234567890',
+  email: 'ginny@ibm.com' }
+Disconnect from Fabric gateway.
+done
+```
+
+6. In our `invoke.js` file, add one more member:
+
+```
+let response = await contract.submitTransaction('addMember', 'arvind@ibm.com', 'Arvind Krishna', 'Broadway Street, NY', '1231231111');
+```
+
+Save the file, and invoke the smart contract. (Run `node invoke.js`).
+You should get output similar to the one above, but with the new data about Arvind. 
+
+### Step 11. Querying the ledger 
+After we have added some objects on the ledger, it's time to query the ledger to see if 
+our data is properly stored on the CouchDB instance of our local fabric network.
+
+1. Take a look at our `query.js` file. It's very similar to our `invoke.js` file, except it has a few 
+key differences:
+
+```
+const channel = network.getChannel();
+    
+//set up our request - specify which chaincode, which function, and which arguments
+let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['GREETING'] };
+
+//query the ledger by the key in the args above
+let resultBuffer = await channel.queryByChaincode(request);
+```
+
+The main difference is that in this file, we use the `queryByChaincode` API, which 
+**reads** from the ledger. This is very important. In our `invoke.js` file, we submit 
+transactions to the ledger, which will all get **written to the ledger** 
+but here, in our `query.js` file, we will not update the ledger. 
+
+2. Run the script, to find the value stored in the `GREETING` variable:
+
+```
+$ node query.js
+```
+
+You should get the following output: 
+
+```
+Connected to Fabric gateway.
+{ text: 'Instantiate was called!' }
+Disconnect from Fabric gateway.
+done
+```
+
+3. Next, let's query for Ginny Rometty. Change the following line:
+
+```
+let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['GREETING'] };
+```
+
+to this:
+
+```
+let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['ginny@ibm.com'] };
+```
+
+Your output should be as follows: 
+
+```
+VSCodeLocalNetwork$ node query.js
+Connected to Fabric gateway.
+{ address: 'Wall Street, NY',
+  email: 'ginny@ibm.com',
+  name: 'Ginny Rometty',
+  number: '1234567890' }
+Disconnect from Fabric gateway.
+done
+```
+
+4. Lastly, let's query for Arvind. Modify the request to be as follows:
+
+```
+let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['ginny@ibm.com'] };
+```
+
+The output should be similar to the one above, except with Arvind's data.
+
+### Step 12. Conclusion
 
 Nice job! You are done! You learned how to create, package, install, instantiate, 
-and invoke a smart contract using Hyperledger's newest API's. At this point, 
+invoke, AND query a smart contract using Hyperledger's newest API's. At this point, 
 you can focus on developing your smart contract, and update your `my-contract.js`
 file knowing that you have taken care of the networking aspects of blockchain, 
 and that you can successfully invoke, and update your ledger using just VSCode,
