@@ -374,7 +374,7 @@ The key happened to be "GREETING" and the value happened to be the object
   text: 'hello'
 }
 ```
-The last thing we should learn is how to query - how to look retrieve data from the ledger. We will do this
+The last thing we should learn is how to query - how to retrieve data from the ledger. We will do this
 by using the `getState` API, which takes in a key, and returns the value associated with that key, if it finds it.
 
 Let's add a query function to our `demoContract`.
