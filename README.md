@@ -49,16 +49,17 @@ You can check your installed versions by running the following commands from a t
 
 # Steps
 
-1. [Create a New Smart Contract Project](#step-1-create-a-new-smart-contract-project)
-2. [Modify Chaincode](#step-2-modify-chaincode)
-3. [Package Smart Contract](#step-3-package-smart-contract)
-4. [Install Smart Contract](#step-4-install-smart-contract)
-5. [Instantiate Smart Contract](#step-5-instantiate-smart-contract)
-6. [Import Certificate and Key](#step-6-import-certificate-and-key)
-7. [Add Identity](#step-7-add-identity)
-8. [Update Network Ports](#step-8-update-network-ports)
-9. [Invoke Smart Contract](#step-9-invoke-smart-contract)
-10. [Conclusion](#step-10-conclusion)
+1. [Creating a new smart contract project](#step-1-creating-a-new-smart-contract-project)
+2. [Modifying the chaincode](#step-2-modifying-the-chaincode)
+3. [Packaging the smart contract](#step-3-packaging-the-smart-contract)
+4. [Installing the smart contract](#step-4-installing-smart-contract)
+5. [Instantiating the smart contract](#step-5-instantiating-the-smart-contract)
+6. [Importing the certificate and key](#step-6-importing-the-certificate-and-key)
+7. [Adding an identity](#step-7-adding-an-identity)
+8. [Updating network ports](#step-8-updating-network-ports)
+9. [Invoking the smart contract](#step-9-invoking-the-smart-contract)
+10. [Querying the ledger](#step-10-querying-the-ledger)
+11. [Conclusion](#step-11-conclusion)
 
 ## Let's get started
 ![packageFile](/docs/installExtension.gif)
@@ -71,7 +72,7 @@ part of your screen. At the top, search the extension marketplace for
 `IBM Blockchain Platform`. Click on `Install`. Then click on `reload`. Nice, you 
 are all set to use the extension!
 
-## Step 1. Create a New Smart Contract Project
+## Step 1. Creating a New Smart Contract Project
 ![packageFile](/docs/createSmartContract.gif)
 
 To create a smart contract project: 
@@ -86,7 +87,7 @@ bring up the command pallete. Choose **IBM Blockchain Platform: Create Smart Con
 6. Once the extension is done packaging your contract, you can open the `lib/my-contract.js` file to see your smart 
 contract code scaffold. Nice job!
 
-## Step 2. Modify Chaincode 
+## Step 2. Modifying Chaincode 
 ![packageFile](/docs/addChaincode.gif)
 Inside your `lib/my-contract.js` file, go ahead and copy 
 and paste this code: 
@@ -127,7 +128,7 @@ Fabric context, and one argument, `arg1` which is used to store a greeting as de
 The `ctx.stub.putState` method is used to record the `greeting` on the ledger and then we 
 return that object back. Save the file, and proceed!
 
-## Step 3. Package Smart Contract
+## Step 3. Packaging Smart Contract
 ![packageFile](/docs/packageSmartContract.gif)
 Now that we have created our smart contract and understood which functions we defined,
 it's time to package it so we can install it on a peer.
@@ -137,7 +138,7 @@ it's time to package it so we can install it on a peer.
 On the top-left corner, you will have all of your smart contract packages. You should 
 see `demoContract@0.0.1` if everything went well. 
 
-## Step 4. Install Smart Contract
+## Step 4. Installing Smart Contract
 ![packageFile](/docs/installSmartContract.gif)
 
 Ok, we're more than halfway there. Now for the fun part! Let's install this contract on the peer!
@@ -168,7 +169,7 @@ take you to your channel view, which should show one channel, named `mychannel`.
 `Install Smart Contract`.
 4. The extension will ask you which package to install, so choose `demoContract@0.0.1`. That's it! Nice job!
 
-## Step 5. Instantiate Smart Contract
+## Step 5. Instantiating the Smart Contract
 ![packageFile](/docs/instantiateSmartContract.gif)
 
 This is the real test - will our smart contract instantiate properly? Let's see.
@@ -181,7 +182,7 @@ right-click on `mychannel` and then on `Instantiate / Upgrade Smart Contract`.
 The extension will do some work, and then you should see in the bottom-right corner that the contract
 was successfully instantiated. Hooray!!
 
-## Step 6. Import certificate and key
+## Step 6. Importing the certificate and key
 ![packageFile](/docs/gitPull.gif)
 
 At this point, we need to start interacting a bit more closely with our
@@ -252,7 +253,7 @@ is the `await wallet.import(identityLabel, X509WalletMixin.createIdentity('Org1M
 which actually creates a new MSP identity using our cert and key file. This [MSP(Membership Service Provider)](https://hyperledger-fabric.readthedocs.io/en/release-1.3/msp.html) identity will be able to connect to the 
 network and invoke smart contracts.
 
-## Step 7. Add Identity
+## Step 7. Adding an Identity
 ![packageFile](/docs/addIdentityScript.gif)
 Now that we have an identity that can interact with our network, we need to 
 to run `npm install` to install all the dependencies that are needed to connect to our local Fabric network. 
@@ -262,7 +263,7 @@ to run `npm install` to install all the dependencies that are needed to connect 
  and populates that folder with the MSP identity, which in our case goes by the name of
 `User1@org1.example.com`. Nice job! 
 
-## Step 8. Update network ports
+## Step 8. Updating network ports
 ![packageFile](/docs/addPorts.gif)
 
 1. Next, open the `network.yaml` in the `VSCodeLocalNetwork` folder. We will use this file to connect 
@@ -305,7 +306,7 @@ certificateAuthorities:
 ```
 4. Great job. Save the file.
 
-## Step 9. Invoke Smart Contract
+## Step 9. Invoking the Smart Contract
 ![packageFile](/docs/invoke.gif)
 
 Ok, so we've instantiated our contract, created our identity, so now what?
@@ -365,8 +366,75 @@ done
 
 Woo!! That's it! Nice job!
 
+### Step 10. Querying the Ledger
+In the previous step, we updated the ledger by using the `putState` API, passing in a key and a value.
+The key happened to be "GREETING" and the value happened to be the object 
+```
+{
+  text: 'hello'
+}
+```
+The last thing we should learn is how to query - how to look retrieve data from the ledger. We will do this
+by using the `getState` API, which takes in a key, and returns the value associated with that key, if it finds it.
 
-## Step 10. Conclusion
+Let's add a query function to our `demoContract`.
+
+1. Copy and paste the following code into your `lib/my-contract.js` file:
+
+```
+'use strict';
+
+const { Contract } = require('fabric-contract-api');
+
+class MyContract extends Contract {
+
+  //update ledger with a greeting to show that the function was called
+  async instantiate(ctx) {
+    let greeting = { text: 'Instantiate was called!' };
+    await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+  }
+
+  //take argument and create a greeting object to be updated to the ledger
+  async transaction1(ctx, arg1) {
+    console.info('transaction1', arg1);
+    let greeting = { text: arg1 };
+    await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
+    return JSON.stringify(greeting);
+  }
+
+  async query(ctx, key) {
+    console.info('querying for key: ' + key  );
+    let returnAsBytes = await ctx.stub.getState(key);
+    let result = JSON.parse(returnAsBytes);
+    return JSON.stringify(result);
+  }
+
+}
+
+module.exports = MyContract;
+```
+This code adds a `query` function which returns the value associated with a given key. Save the file.
+
+2. Save the file, and update the `package.json` file such that the line 3, which 
+contains the version number, now reads:
+
+```
+  "version": "0.0.2",
+```
+Save the file.
+3. After we have updated our package.json, go back and follow steps 3,4,5 to package, install, and 
+instantiate our new smart contract. 
+4. In our `invoke.js` file, change the following line
+```
+let response = await contract.submitTransaction('transaction1', 'new text that will overwrite earlier text!');
+
+to the following:
+```
+let response = await contract.submitTransaction('query', 'GREETING');
+```
+
+### Step 11. Conclusion
+
 Nice job! You are done! You learned how to create, package, install, instantiate, 
 and invoke a smart contract using Hyperledger's newest API's. At this point, 
 you can focus on developing your smart contract, and update your `my-contract.js`
