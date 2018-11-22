@@ -367,7 +367,7 @@ done
 
 Woo!! That's it! Nice job!
 
-### Step 10. Updating our smart contract 
+### Step 10. Updating the smart contract 
 In the previous step, we updated the ledger by using the `putState` API, passing in a key and a value.
 The key happened to be "GREETING" and the value happened to be the object 
 ```
