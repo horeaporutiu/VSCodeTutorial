@@ -413,6 +413,7 @@ class MyContract extends Contract {
 
 module.exports = MyContract;
 ```
+
 This code adds a `query` function which returns the value associated with a given key. Save the file.
 
 2. Save the file, and update the `package.json` file such that the line 3, which 
@@ -421,14 +422,17 @@ contains the version number, now reads:
 ```
   "version": "0.0.2",
 ```
+
 Save the file.
 3. After we have updated our package.json, go back and follow steps 3,4,5 to package, install, and 
 instantiate our new smart contract. 
 4. In our `invoke.js` file, change the following line
 ```
 let response = await contract.submitTransaction('transaction1', 'new text that will overwrite earlier text!');
+```
 
 to the following:
+
 ```
 let response = await contract.submitTransaction('query', 'GREETING');
 ```
