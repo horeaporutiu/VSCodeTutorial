@@ -437,10 +437,17 @@ contains the version number, now reads:
 
 Save the file.
 
-3. After we have updated our package.json, go back and follow steps 3,4,5 to package, install, and 
-instantiate our new smart contract. 
+3. After we have updated our package.json, go back and follow steps 3 and 4 to package and install our 
+our new smart contract.
 
-4. In our `invoke.js` file, change the following line
+4. To upgrade our existing smart contract to our new version, in the bottom left corner 
+of our IBM Blockchain extension, expand the `Instantiated Smart Contract` link, and then
+right-click on `demoContract` and choose **Upgrade Smart Contract**. If all goes
+well you should get a notification in the bottom right corner saying 
+**Successfully upgraded smart contract**.
+
+![packageFile](/docs/addMember.gif)
+5. In our `invoke.js` file, change the following line
 
 ```
 let response = await contract.submitTransaction('transaction1', 'hello');
@@ -452,7 +459,7 @@ to the following:
 let response = await contract.submitTransaction('addMember', 'ginny@ibm.com', 'Ginny Rometty', 'Wall Street, NY', '1234567890');
 ```
 
-5. Save the file, and run the following command:
+6. Save the file, and run the following command:
 
 ```
 $ node invoke.js
@@ -474,7 +481,7 @@ Disconnect from Fabric gateway.
 done
 ```
 
-6. In our `invoke.js` file, add one more member:
+7. In our `invoke.js` file, add one more member:
 
 ```
 let response = await contract.submitTransaction('addMember', 'arvind@ibm.com', 'Arvind Krishna', 'Broadway Street, NY', '1231231111');
