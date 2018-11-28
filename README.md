@@ -510,7 +510,7 @@ You should get the following output:
 
 ```
 Connected to Fabric gateway.
-{ text: 'Instantiate was called!' }
+{ text: 'hello' }
 Disconnect from Fabric gateway.
 done
 ```
