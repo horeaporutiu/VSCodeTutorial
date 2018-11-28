@@ -119,8 +119,8 @@ class MyContract extends Contract {
 module.exports = MyContract;
 ```
 
-<!-- **Please note:** the gifs may not match the following function, but this is the one 
-you should have in your `lib/my-contract.js` file now!  -->
+**Note:** the gifs may not **exactly** match the above chaincode, but this is the one 
+you should have in your `lib/my-contract.js` file now!
 
 Let's examine the functions we defined. The `instantiate` function creates a greeting 
 object and then stores that on the ledger with the key `GREETING`. 
@@ -350,6 +350,9 @@ let response = await contract.submitTransaction('transaction1', 'hello');
 ```
 $ node invoke.js
 ```
+If you get an error, check your `network.yaml` file and make sure the ports are the same as shown in your 
+logs from the `docker ps` command.
+
 If all goes well, you should see the following output:
 
 ```
@@ -545,7 +548,7 @@ done
 4. Lastly, let's query for Arvind. Modify the request to be as follows:
 
 ```
-let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['ginny@ibm.com'] };
+let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['arvind@ibm.com'] };
 ```
 
 The output should be similar to the one above, except with Arvind's data.
