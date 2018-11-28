@@ -490,7 +490,8 @@ let response = await contract.submitTransaction('addMember', 'arvind@ibm.com', '
 Save the file, and invoke the smart contract. (Run `node invoke.js`).
 You should get output similar to the one above, but with the new data about Arvind. 
 
-### Step 11. Querying the ledger 
+### Step 11. Querying the ledger
+![packageFile](/docs/query.gif)
 After we have added some objects on the ledger, it's time to query the ledger to see if 
 our data is properly stored on the CouchDB instance of our local fabric network.
 
