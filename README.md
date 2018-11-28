@@ -543,7 +543,7 @@ done
 4. Lastly, let's query for Arvind. Modify the request to be as follows:
 
 ```
-let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['ginny@ibm.com'] };
+let request = { chaincodeId: 'demoContract', fcn: 'query', args: ['arvind@ibm.com'] };
 ```
 
 The output should be similar to the one above, except with Arvind's data.
