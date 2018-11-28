@@ -50,9 +50,9 @@ You can check your installed versions by running the following commands from a t
 # Steps
 
 1. [Creating a new smart contract project](#step-1-creating-a-new-smart-contract-project)
-2. [Modifying the chaincode](#step-2-modifying-the-chaincode)
-3. [Packaging the smart contract](#step-3-packaging-the-smart-contract)
-4. [Installing the smart contract](#step-4-installing-smart-contract)
+2. [Modifying the smart contract](#step-2-modifying-the-smart-contract)
+3. [Packaging the smart contract](#step-3-ackaging-the-smart-contract)
+4. [Installing the smart contract](#step-4-Installing-the-smart-contract)
 5. [Instantiating the smart contract](#step-5-instantiating-the-smart-contract)
 6. [Importing the certificate and key](#step-6-importing-the-certificate-and-key)
 7. [Adding an identity](#step-7-adding-an-identity)
@@ -88,7 +88,7 @@ bring up the command pallete. Choose **IBM Blockchain Platform: Create Smart Con
 6. Once the extension is done packaging your contract, you can open the `lib/my-contract.js` file to see your smart 
 contract code scaffold. Nice job!
 
-## Step 2. Modifying Chaincode 
+## Step 2. Modifying the Smart Contract 
 ![packageFile](/docs/addChaincode.gif)
 Inside your `lib/my-contract.js` file, go ahead and copy 
 and paste this code: 
@@ -129,7 +129,7 @@ Fabric context, and one argument, `arg1` which is used to store a greeting as de
 The `ctx.stub.putState` method is used to record the `greeting` on the ledger and then we 
 return that object back. Save the file, and proceed!
 
-## Step 3. Packaging Smart Contract
+## Step 3. Packaging the Smart Contract
 ![packageFile](/docs/packageSmartContract.gif)
 Now that we have created our smart contract and understood which functions we defined,
 it's time to package it so we can install it on a peer.
@@ -139,7 +139,7 @@ it's time to package it so we can install it on a peer.
 On the top-left corner, you will have all of your smart contract packages. You should 
 see `demoContract@0.0.1` if everything went well. 
 
-## Step 4. Installing Smart Contract
+## Step 4. Installing the Smart Contract
 ![packageFile](/docs/installSmartContract.gif)
 
 Ok, we're more than halfway there. Now for the fun part! Let's install this contract on the peer!
