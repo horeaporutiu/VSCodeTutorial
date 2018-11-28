@@ -350,6 +350,9 @@ let response = await contract.submitTransaction('transaction1', 'hello');
 ```
 $ node invoke.js
 ```
+If you get an error, check your `network.yaml` file and make sure the ports are the same as shown in your 
+logs from the `docker ps` command.
+
 If all goes well, you should see the following output:
 
 ```
