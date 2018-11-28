@@ -367,7 +367,8 @@ done
 
 Woo!! That's it! Nice job!
 
-### Step 10. Updating the smart contract 
+### Step 10. Updating the smart contract
+![packageFile](/docs/upgrade.gif)
 In the previous step, we updated the ledger by using the `putState` API, passing in a key and a value.
 The key happened to be "GREETING" and the value happened to be the object 
 ```
@@ -388,13 +389,13 @@ const { Contract } = require('fabric-contract-api');
 
 class MyContract extends Contract {
 
-  //update ledger with a greeting to show that the function was called
+  //update ledger with a greeting 
   async instantiate(ctx) {
     let greeting = { text: 'Instantiate was called!' };
     await ctx.stub.putState('GREETING', Buffer.from(JSON.stringify(greeting)));
   }
 
-  //take argument and create a greeting object to be updated to the ledger
+  //add a member along with their email, name, address, and number
   async addMember(ctx, email, name, address, phoneNumber) {
     let member = {
       name: name,
@@ -405,6 +406,7 @@ class MyContract extends Contract {
     return JSON.stringify(member);
   }
 
+  // look up data by key
   async query(ctx, key) {
     console.info('querying for key: ' + key  );
     let returnAsBytes = await ctx.stub.getState(key);
@@ -417,7 +419,7 @@ class MyContract extends Contract {
 module.exports = MyContract;
 ```
 
-The code adds an addMember function which takes in arguments from the user such as 
+The code adds an `addMember` function which takes in arguments from the user such as 
 email, name, address, and phone number, and saves that data on the ledger as a key-value pair. 
 
 This code also adds a `query` function - this function takes in one argument, which is the key to look up. 
@@ -510,7 +512,7 @@ You should get the following output:
 
 ```
 Connected to Fabric gateway.
-{ text: 'Instantiate was called!' }
+{ text: 'hello' }
 Disconnect from Fabric gateway.
 done
 ```
