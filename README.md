@@ -119,8 +119,8 @@ class MyContract extends Contract {
 module.exports = MyContract;
 ```
 
-<!-- **Please note:** the gifs may not match the following function, but this is the one 
-you should have in your `lib/my-contract.js` file now!  -->
+**Note:** the gifs may not match the above chaincode, but this is the one 
+you should have in your `lib/my-contract.js` file now!
 
 Let's examine the functions we defined. The `instantiate` function creates a greeting 
 object and then stores that on the ledger with the key `GREETING`. 
