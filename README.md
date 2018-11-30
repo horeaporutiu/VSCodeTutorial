@@ -119,7 +119,7 @@ class MyContract extends Contract {
 module.exports = MyContract;
 ```
 
-**Note:** the gifs may not **exactly** match the above chaincode, but this is the one 
+**Note:** the gifs may not **exactly** match the above smart contract, but this is the one 
 you should have in your `lib/my-contract.js` file now!
 
 Let's examine the functions we defined. The `instantiate` function creates a greeting 
