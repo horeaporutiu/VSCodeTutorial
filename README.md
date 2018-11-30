@@ -7,9 +7,11 @@ tutorial, we will understand how to quickly develop, demo, and deploy blockchain
 application on a local Hyperledger Fabric network using VSCode. This tutorial assumes some
 basic understanding of Hyperledger Fabric.
 
-# Watch the Video
+# Watch the Videos
 
 [![](docs/thumbnail.png)](https://www.youtube.com/watch?v=r77p-8k4Mpk)
+
+[![](docs/thumbnail2.png)](https://www.youtube.com/watch?v=ixu8tyXsCwY)
 
 ### Prerequisites
 
