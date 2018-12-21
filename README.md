@@ -190,26 +190,35 @@ was successfully instantiated. Hooray!!
 
 At this point, we need to start interacting a bit more closely with our
 Fabric instance. We'll need to prove to the certificate authority that we are allowed
-to create a digital identity on the network, and that is by showing the certificate
-authority our certificate and private key. For the sake of keeping this tutorial as short as possible,
-I have a GitHub repo with all the certs, keys, and scripts we 
-will work with, so go ahead and git clone this repo in a directory of your choice, but outside
-the `demoContract` directory.
+to create a digital identity on the network. This is done by showing the certificate
+authority our certificate and private key.
 
-1. In a terminal, navigate to a directory to clone the GitHub repository into.
+1. In VSCode, click on the IBM Blockchain Platform extension in the left sidebar.
 
-2. Clone the GitHub repository by using the following command:
+2. Under `Blockchain Connections` in the bottom-left corner, right-click on the `local_fabric`
+connection, and select `Export Connection Details`. Then you can choose the current smart 
+contract folder to save the connection profile. 
+
+3. You should see something like: 
+
+```
+Successfully exported connection details to /Users/Horea.Porutiu@ibm.com/Workdir/demoContract/local_fabric
+```
+
+4. We now need a script to create a new identity on the network. Clone this
+Github Repo outside of your smart contract directory 
+to get the script. You can find the script under `VSCodeLocalNetwork/addIdentity.js`.
 
   ```
   $ git clone https://github.com/horeaporutiu/VSCodeLocalNetwork.git
   ```
 
-3. Import this folder into your VSCode workspace by right-clicking an empty space
+5. Import this folder into your VSCode workspace by right-clicking an empty space
 under your smart contract directory in VSCode and selecting **Add folder to workspace**. 
 Find the recently clone folder `VSCodeLocalNetwork` and double-click it.
-4. Skim the `cert` and `key` files - they contain our certificate and private key
-that will be used to request an identity from the certificate authority. There is 
-also a `addIdentity.js` script which has the following code: 
+
+6. Take a look at `VSCodeLocalNetwork/addIdentity.js`. You will find the 
+following code: 
 
 ```
 'use strict';
@@ -272,23 +281,25 @@ to run `npm install` to install all the dependencies that are needed to connect 
 1. Next, open the `network.yaml` in the `VSCodeLocalNetwork` folder. We will use this file to connect 
 to our Docker containers running locally.
 
-2. To see your docker containers running locally, run `docker ps`. Your output should look something like this: 
+2. To see your docker containers running locally, open the `demoContract/local_fabric/connection.json`
+file.
 
 ![packageFile](/docs/ports.png)
 
 **Important Note: your ports will differ from those shown** 
 
-3. Next, look for `fabric-peer`,`fabric-ca`, and `fabric-orderer` in the `docker ps` logs.
-It's likely going to be hard to read, so be careful here. The 5 digit number is the port 
-number that we need to update in the appropriate place in the `network.yaml` file.
-Update the peer, ca, and orderer's url field as shown in the preceding gif.
+3. Next, look for the urls to connect to your peer, orderer, and certificate authority in the 
+`demoContract/local_fabric/connection.json` file. Copy the corresponding url field from
+ `orderer.example.com`, `peer0.org1.example.com`, and `ca.org1.example.com`.
  
 In the example above the ports in `network.yaml` would be set as follows:
+
+First the orderer: 
 
 ```
 orderers:
   orderer.example.com:
-    url: grpc://localhost:32823
+    url: grpc://localhost:17050
 ```
 Then the peer: 
 
@@ -296,7 +307,7 @@ Then the peer:
 peers:
   peer0.org1.example.com:
     # this URL is used to send endorsement and query requests
-    url: grpc://localhost:32827
+    url: grpc://localhost:17051
 
 ```
 
@@ -305,7 +316,7 @@ Then the CA:
 ```
 certificateAuthorities:
   ca-org1:
-    url: http://localhost:32822
+    url: http://localhost:17054
 ```
 4. Great job. Save the file.
 
