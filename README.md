@@ -462,6 +462,7 @@ well you should get a notification in the bottom right corner saying
 **Successfully upgraded smart contract**.
 
 ![packageFile](/docs/addMember.gif)
+
 5. Now, we can invoke our transactions from the VSCode extension. Under `Blockchain Connections` from the bottom-left
 corner of our IBM Blockchain Extension, under `mychannel` expand `peer0.org1.example.com` and then expand the `demoContract`
 to view the functions we have defined in `my-contract.js`, namely `instantiate`, `addMember` and `query`.
@@ -472,6 +473,7 @@ to view the functions we have defined in `my-contract.js`, namely `instantiate`,
 ginny@ibm.com, Ginny Rometty, Wall Street NY, 1234567890
 ```
 
+In the output, you should see the following:
 ```
 Submitting transaction addMember with args Ginny Rometty, Wall Street NY, 1234567890, ginny@ibm.com
 ```
