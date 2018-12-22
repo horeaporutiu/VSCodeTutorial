@@ -417,7 +417,8 @@ class MyContract extends Contract {
     let member = {
       name: name,
       address: address,
-      number: phoneNumber
+      number: phoneNumber,
+      email: email
     };
     await ctx.stub.putState(email, Buffer.from(JSON.stringify(member)));
     return JSON.stringify(member);
@@ -468,7 +469,7 @@ to view the functions we have defined in `my-contract.js`, namely `instantiate`,
 6. Right-click on `addMember` and click `Submit Transaction`. For the arguments, copy and paste the following:
 
 ```
-Ginny Rometty, Wall Street NY, 1234567890, ginny@ibm.com
+ginny@ibm.com, Ginny Rometty, Wall Street NY, 1234567890
 ```
 
 ```
@@ -539,10 +540,7 @@ Your output should be as follows:
 ```
 VSCodeLocalNetwork$ node query.js
 Connected to Fabric gateway.
-{ address: 'Wall Street, NY',
-  email: 'ginny@ibm.com',
-  name: 'Ginny Rometty',
-  number: '1234567890' }
+{"address":" Wall Street NY","email":"ginny@ibm.com","name":" Ginny Rometty","number":" 1234567890"}
 Disconnect from Fabric gateway.
 done
 ```
