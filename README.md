@@ -384,7 +384,7 @@ done
 
 Woo!! That's it! Nice job!
 
-### Step 10. Updating the smart contract
+## Step 10. Updating the smart contract
 ![packageFile](/docs/upgrade.gif)
 In the previous step, we updated the ledger by using the `putState` API, passing in a key and a value.
 The key happened to be "GREETING" and the value happened to be the object 
@@ -484,7 +484,7 @@ arvind@ibm.com, Arvind Krishna, Broadway Street NY, 1231231111
 Nice job. Now on to the last step!
 
 
-### Step 11. Querying the ledger
+## Step 11. Querying the ledger
 ![packageFile](/docs/query.gif)
 After we have added some objects on the ledger, it's time to query the ledger to see if 
 our data is properly stored on the CouchDB instance of our local fabric network.
