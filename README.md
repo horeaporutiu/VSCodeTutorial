@@ -292,7 +292,7 @@ file.
 `demoContract/local_fabric/connection.json` file. Copy the corresponding url field from
  `orderer.example.com`, `peer0.org1.example.com`, and `ca.org1.example.com`.
  
-In the example above the ports in `network.yaml` would be set as follows:
+In the picture above the ports in `network.yaml` would be set as follows:
 
 First the orderer: 
 
@@ -327,7 +327,8 @@ Ok, so we've instantiated our contract, created our identity, so now what?
 Well now, let's actually invoke the functions in our contract! To do this, 
 we will need to invoke a script from our `VSCodeLocalNetwork` directory. 
 
-1. From our git clone, we should have a file called `invoke.js`. Let's examine this file.
+1. From our `VSCodeLocalNetwork` directory, we should have a file called `invoke.js`. 
+Let's examine this file.
 
 2. After we create an instance of the `fabric-network`, we connect to the network with the following code:
 ```
@@ -460,48 +461,28 @@ well you should get a notification in the bottom right corner saying
 **Successfully upgraded smart contract**.
 
 ![packageFile](/docs/addMember.gif)
-5. In our `invoke.js` file, change the following line
+5. Now, we can invoke our transactions from the VSCode extension. Under `Blockchain Connections` from the bottom-left
+corner of our IBM Blockchain Extension, under `mychannel` expand `peer0.org1.example.com` and then expand the `demoContract`
+to view the functions we have defined in `my-contract.js`, namely `instantiate`, `addMember` and `query`.
+
+6. Right-click on `addMember` and click `Submit Transaction`. For the arguments, copy and paste the following:
 
 ```
-let response = await contract.submitTransaction('transaction1', 'hello');
+Ginny Rometty, Wall Street NY, 1234567890, ginny@ibm.com
 ```
 
-to the following:
-
 ```
-let response = await contract.submitTransaction('addMember', 'ginny@ibm.com', 'Ginny Rometty', 'Wall Street, NY', '1234567890');
+Submitting transaction addMember with args Ginny Rometty, Wall Street NY, 1234567890, ginny@ibm.com
 ```
 
-6. Save the file, and run the following command:
+Let's add one more member, so repeat this step, bbut for the arguments, copy and paste the following: 
 
 ```
-$ node invoke.js
+arvind@ibm.com, Arvind Krishna, Broadway Street NY, 1231231111
 ```
 
-You should get the following output: 
+Nice job. Now on to the last step!
 
-```
-VSCodeLocalNetwork$ node invoke.js
-Connected to Fabric gateway.
-Connected to mychannel.
-Submit hello world transaction.
-info: [TransactionEventHandler]: _strategySuccess: strategy success for transaction "d97fa4844c3135153228200578553423df3c8ff59fc54506c9421e16d7cc9a0b"
-{ name: 'Ginny Rometty',
-  address: 'Wall Street, NY',
-  number: '1234567890',
-  email: 'ginny@ibm.com' }
-Disconnect from Fabric gateway.
-done
-```
-
-7. In our `invoke.js` file, add one more member:
-
-```
-let response = await contract.submitTransaction('addMember', 'arvind@ibm.com', 'Arvind Krishna', 'Broadway Street, NY', '1231231111');
-```
-
-Save the file, and invoke the smart contract. (Run `node invoke.js`).
-You should get output similar to the one above, but with the new data about Arvind. 
 
 ### Step 11. Querying the ledger
 ![packageFile](/docs/query.gif)
