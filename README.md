@@ -1,5 +1,7 @@
 # Use IBM Blockchain Platform extension in VSCode to develop a Smart Contract
 
+# DEPRECATED - SEE updated tutorial here: https://developer.ibm.com/tutorials/ibm-blockchain-platform-vscode-smart-contract/
+
 In this tutorial, we will learn the process of using IBM Blockchain Platform's VSCode extension 
 to  streamline the 
 process of developing, testing, and deploying a smart contract. Once we finish the 
