@@ -452,7 +452,7 @@ contains the version number, now reads:
 
 Save the file.
 
-3. After we have updated our package.json, go back and follow steps 3 and 4 to package and install our 
+3. After we have updated our package.json, go back and follow steps 3 and 4 to package and install  
 our new smart contract.
 
 4. To upgrade our existing smart contract to our new version, in the bottom left corner 
@@ -478,7 +478,7 @@ In the output, you should see the following:
 Submitting transaction addMember with args Ginny Rometty, Wall Street NY, 1234567890, ginny@ibm.com
 ```
 
-Let's add one more member, so repeat this step, bbut for the arguments, copy and paste the following: 
+Let's add one more member, so repeat this step, but for the arguments, copy and paste the following: 
 
 ```
 arvind@ibm.com, Arvind Krishna, Broadway Street NY, 1231231111
